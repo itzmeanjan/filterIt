@@ -1,5 +1,10 @@
 # filterIt
-Another Image Filtering implementation in Java
+
+![banner](banner.jpg)
+
+Another Order **n** _( >= 1 )_ Image Filtering implementation in Java
+
+**Show some** :heart:
 
 ## mean filter
 
