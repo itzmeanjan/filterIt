@@ -16,7 +16,10 @@ class Worker implements Runnable {
     public void run() {
         System.out.println("[*] Applying Order " + order + " " + filter.filterName() + " ( "
                 + Thread.currentThread().getName() + " )");
-        filter.filterAndSave(target, order);
-        System.out.println("[+] Success ( " + Thread.currentThread().getName() + " )");
+        ReturnVal returnVal = filter.filterAndSave(target, order);
+        if (returnVal.code == 0)
+            System.out.println(returnVal + " ( " + Thread.currentThread().getName() + " )");
+        else
+            System.out.println(returnVal + " ( " + Thread.currentThread().getName() + " )");
     }
 }

@@ -56,11 +56,12 @@ class ModeFilter implements Filter {
     }
 
     // applies specific filter & writes filtered image into target file
-    public void filterAndSave(String target, int order) {
+    public ReturnVal filterAndSave(String target, int order) {
         try {
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
+            return new ReturnVal(0, "success");
         } catch (IOException io) {
-            System.err.println(io);
+            return new ReturnVal(1, io.toString());
         }
     }
 

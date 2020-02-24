@@ -4,7 +4,7 @@
 // different threads, by passing Filter type ( which is broader )
 // while creating instance of Worker class
 interface Filter {
-    abstract void filterAndSave(String target, int order); // filters image & stores it in target file
+    abstract ReturnVal filterAndSave(String target, int order); // filters image & stores it in target file
 
     abstract String filterName(); // returns current filter name
 

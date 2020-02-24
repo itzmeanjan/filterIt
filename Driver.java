@@ -51,7 +51,7 @@ class Driver {
             System.err.println("[!] Invalid order value");
             System.exit(-1);
         }
-        Thread[] thrdArr = new Thread[3 * order];
+        Thread[] thrdArr = new Thread[4 * order];
         int idx = 0;
         for (int i = 1; i <= order; i++) {
             thrdArr[idx] = new Thread(
@@ -71,6 +71,13 @@ class Driver {
             thrdArr[idx] = new Thread(
                     new Worker(new ModeFilter(fileName),
                             "order_" + i + "_ModeFiltered." + driver.imageExtension(fileName), i),
+                    "Thread_" + (idx + 1));
+            idx++;
+        }
+        for (int i = 1; i <= order; i++) {
+            thrdArr[idx] = new Thread(
+                    new Worker(new MinFilter(fileName),
+                            "order_" + i + "_MinFiltered." + driver.imageExtension(fileName), i),
                     "Thread_" + (idx + 1));
             idx++;
         }
