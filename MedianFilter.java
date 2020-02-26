@@ -31,6 +31,15 @@ class MedianFilter implements Filter {
         }
     }
 
+    private int[] serialize(int[][] pxlVal) {
+        int[] arr = new int[(int) Math.pow(pxlVal.length, 2)];
+        int idx = 0;
+        for (int[] i : pxlVal)
+            for (int j : i)
+                arr[idx++] = j;
+        return arr;
+    }
+
     // given a set of pixel amplitude values
     // we'll first sort them ascendically
     // and find median of those elements
@@ -40,12 +49,13 @@ class MedianFilter implements Filter {
     // but for even number of elements,
     // we'll consider both size/2 & size/2 - 1,
     // indexed elements, and take their mean ( rounded )
-    private int median(int[] pxlVal) {
-        this.sort(pxlVal);
-        if (pxlVal.length % 2 == 0) {
-            return Math.round((float) (pxlVal[pxlVal.length / 2] + pxlVal[pxlVal.length / 2 - 1]) / (float) 2);
+    private int median(int[][] pxlVal) {
+        int[] tmp = this.serialize(pxlVal);
+        this.sort(tmp);
+        if (tmp.length % 2 == 0) {
+            return Math.round((float) (tmp[tmp.length / 2] + tmp[tmp.length / 2 - 1]) / (float) 2);
         }
-        return pxlVal[pxlVal.length / 2];
+        return tmp[tmp.length / 2];
     }
 
     // reads image content, and returns so;
@@ -83,10 +93,14 @@ class MedianFilter implements Filter {
     // applies specific filter & writes filtered image into target file
     public ReturnVal filterAndSave(String target, int order) {
         try {
+            if (order < 1)
+                throw new Exception("Bad input : order must be > 0");
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
             return new ReturnVal(1, io.toString());
+        } catch (Exception e) {
+            return new ReturnVal(1, e.toString());
         }
     }
 

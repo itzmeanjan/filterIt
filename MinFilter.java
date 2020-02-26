@@ -16,13 +16,12 @@ class MinFilter implements Filter {
 
     // computes min intensity pixel value
     // from neighborhood of a certain pixel ( inclusive )
-    private int min(int[] pxlVal) {
+    private int min(int[][] pxlVal) {
         int min = Integer.MAX_VALUE;
-        for (int i : pxlVal) {
-            if (i < min) {
-                min = i;
-            }
-        }
+        for (int[] i : pxlVal)
+            for (int j : i)
+                if (j < min)
+                    min = j;
         return min;
     }
 
@@ -61,10 +60,14 @@ class MinFilter implements Filter {
     // applies specific filter & writes filtered image into target file
     public ReturnVal filterAndSave(String target, int order) {
         try {
+            if (order < 1)
+                throw new Exception("Bad input : order must be > 0");
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
             return new ReturnVal(1, io.toString());
+        } catch (Exception e) {
+            return new ReturnVal(1, e.toString());
         }
     }
 

@@ -13,13 +13,12 @@ class ModeFilter implements Filter {
 
     // computes max amplitude pixel value
     // from neighborhood of a certain pixel ( inclusive )
-    private int mode(int[] pxlVal) {
+    private int mode(int[][] pxlVal) {
         int max = Integer.MIN_VALUE;
-        for (int i : pxlVal) {
-            if (i > max) {
-                max = i;
-            }
-        }
+        for (int[] i : pxlVal)
+            for (int j : i)
+                if (j > max)
+                    max = j;
         return max;
     }
 
@@ -58,10 +57,14 @@ class ModeFilter implements Filter {
     // applies specific filter & writes filtered image into target file
     public ReturnVal filterAndSave(String target, int order) {
         try {
+            if (order < 1)
+                throw new Exception("Bad input : order must be > 0");
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
             return new ReturnVal(1, io.toString());
+        } catch (Exception e) {
+            return new ReturnVal(1, e.toString());
         }
     }
 

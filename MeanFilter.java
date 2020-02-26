@@ -13,12 +13,14 @@ class MeanFilter implements Filter {
 
     // calculates mean of a set of integers,
     // returns rounded value
-    private int mean(int[] pxlVal) {
+    private int mean(int[][] pxlVal) {
         int sum = 0;
-        for (int i : pxlVal) {
-            sum += i;
+        for (int[] i : pxlVal) {
+            for (int j : i) {
+                sum += j;
+            }
         }
-        return Math.round((float) sum / (float) pxlVal.length);
+        return Math.round((float) sum / (float) Math.pow(pxlVal.length, 2));
     }
 
     // reads image content, and returns so;
@@ -54,10 +56,14 @@ class MeanFilter implements Filter {
     // applies specific filter & writes filtered image into target file
     public ReturnVal filterAndSave(String target, int order) {
         try {
+            if (order < 1)
+                throw new Exception("Bad input : order must be > 0");
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
             return new ReturnVal(1, io.toString());
+        } catch (Exception e) {
+            return new ReturnVal(1, e.toString());
         }
     }
 
