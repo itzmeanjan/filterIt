@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-class SobelFilter implements EdgeDetection {
+class PrewittFilter implements EdgeDetection {
     String filePath; // image to be filtered
 
-    SobelFilter(String fp) {
+    PrewittFilter(String fp) {
         this.filePath = fp;
     }
 
@@ -19,14 +19,18 @@ class SobelFilter implements EdgeDetection {
         }
     }
 
+    // generates a 3 x 3 horizontal prewitt kernel
     public int[][] getHorizontalMask() {
-        return new int[][] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+        return new int[][] { { -1, -1, -1 }, { 0, 0, 0 }, { 1, 1, 1 } };
     }
 
+    // generates a 3 x 3 vertical prewitt kernel
     public int[][] getVerticalMask() {
-        return new int[][] { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+        return new int[][] { { -1, 0, 1 }, { -1, 0, 1 }, { -1, 0, 1 } };
     }
 
+    // applies given mask on top of pixels ( which is also 3x3 )
+    // doesn't modify pixel value holder 2D array, creates a new array
     public int[][] applyMask(int[][] mask, int[][] pixelV) {
         int[][] tmp = new int[pixelV.length][pixelV[0].length];
         for (int i = 0; i < pixelV.length; i++)
@@ -35,6 +39,9 @@ class SobelFilter implements EdgeDetection {
         return tmp;
     }
 
+    // computes sum of all values present in a 2D array
+    // which is array obtained after invoking above method
+    // i.e. mask has been applied
     public int computePartial(int[][] pixelV) {
         int partial = 0;
         for (int[] i : pixelV)
@@ -43,6 +50,11 @@ class SobelFilter implements EdgeDetection {
         return partial;
     }
 
+    // given partial w.r.t. change along X &
+    // partial w.r.t. change along Y, we'll compute
+    // gradient, which will be normalized to a 0-255 range
+    // because pixel intensity in 8-bit RGB image can't be
+    // > 255 & < 0
     public int computeGradient(int gx, int gy) {
         return ((int) Math.round(Math.sqrt(Math.pow(gx, 2) + Math.pow(gy, 2)))) % 256; // because images are 8bit RGB
                                                                                        // images, so we can't let
@@ -58,19 +70,16 @@ class SobelFilter implements EdgeDetection {
             for (int i = 0; i < img.getHeight(); i++) {
                 for (int j = 0; j < img.getWidth(); j++) {
                     Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
-                    result.setRGB(j, i, (new Color(
-                            this.computeGradient(
-                                    this.computePartial(
-                                            this.applyMask(vMask, pxl.getNeighbouringPixelsFromImage(img, 'r', order))),
-                                    0),
-                            this.computeGradient(
-                                    this.computePartial(
-                                            this.applyMask(vMask, pxl.getNeighbouringPixelsFromImage(img, 'g', order))),
-                                    0),
-                            this.computeGradient(
-                                    this.computePartial(
-                                            this.applyMask(vMask, pxl.getNeighbouringPixelsFromImage(img, 'b', order))),
-                                    0)).getRGB()));
+                    result.setRGB(j, i,
+                            (new Color(
+                                    this.computeGradient(0,
+                                            this.computePartial(this.applyMask(vMask,
+                                                    pxl.getNeighbouringPixelsFromImage(img, 'r', order)))),
+                                    this.computeGradient(0,
+                                            this.computePartial(this.applyMask(vMask,
+                                                    pxl.getNeighbouringPixelsFromImage(img, 'g', order)))),
+                                    this.computeGradient(0, this.computePartial(this.applyMask(vMask,
+                                            pxl.getNeighbouringPixelsFromImage(img, 'b', order))))).getRGB()));
                 }
             }
             return result;
@@ -81,7 +90,7 @@ class SobelFilter implements EdgeDetection {
     public ReturnVal filterAndSaveV(String target, int order) {
         try {
             if (order != 1)
-                throw new Exception("Bad input : order must be 1 for SobelFilter");
+                throw new Exception("Bad input : order must be 1 for PrewittFilter");
             ImageIO.write(this.filterV(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
@@ -121,7 +130,7 @@ class SobelFilter implements EdgeDetection {
     public ReturnVal filterAndSaveH(String target, int order) {
         try {
             if (order != 1)
-                throw new Exception("Bad input : order must be 1 for SobelFilter");
+                throw new Exception("Bad input : order must be 1 for PrewittFilter");
             ImageIO.write(this.filterH(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
@@ -160,7 +169,7 @@ class SobelFilter implements EdgeDetection {
     public ReturnVal filterAndSave(String target, int order) {
         try {
             if (order != 1)
-                throw new Exception("Bad input : order must be 1 for SobelFilter");
+                throw new Exception("Bad input : order must be 1 for PrewittFilter");
             ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
             return new ReturnVal(0, "success");
         } catch (IOException io) {
@@ -172,7 +181,7 @@ class SobelFilter implements EdgeDetection {
 
     @Override
     public String filterName() {
-        return "Sobel Filter";
+        return "Prewitt Filter";
     }
 
     @Override
@@ -181,7 +190,7 @@ class SobelFilter implements EdgeDetection {
     }
 
     public static void main(String[] args) {
-        SobelFilter sfFilter = new SobelFilter("sample.jpg");
-        System.out.println(sfFilter.filterAndSave("./sobel.jpg", 1));
+        SobelFilter sfFilter = new SobelFilter("./examples/sample.jpg");
+        System.out.println(sfFilter.filterAndSave("./prewitt.jpg", 1));
     }
 }

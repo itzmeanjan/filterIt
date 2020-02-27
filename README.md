@@ -34,6 +34,8 @@ Generated images will be in current working directory :wink:
 
 ## examples
 
+### Spatial Filter(s)
+
 Order | Mean | Median | Mode | Min
 --- | --- | --- | --- | ---
 0 | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg)
@@ -42,6 +44,13 @@ Order | Mean | Median | Mode | Min
 3 | ![order_3_MeanFiltered](examples/order_3_MeanFiltered.jpg) | ![order_3_MedianFiltered](examples/order_3_MedianFiltered.jpg) | ![order_3_ModeFiltered](examples/order_3_ModeFiltered.jpg) | ![order_3_MinFiltered](examples/order_3_MinFiltered.jpg)
 4 | ![order_4_MeanFiltered](examples/order_4_MeanFiltered.jpg) | ![order_4_MedianFiltered](examples/order_4_MedianFiltered.jpg) | ![order_4_ModeFiltered](examples/order_4_ModeFiltered.jpg) | ![order_4_MinFiltered](examples/order_4_MinFiltered.jpg)
 5 | ![order_5_MeanFiltered](examples/order_5_MeanFiltered.jpg) | ![order_5_MedianFiltered](examples/order_5_MedianFiltered.jpg) | ![order_5_ModeFiltered](examples/order_5_ModeFiltered.jpg) | ![order_5_MinFiltered](examples/order_5_MinFiltered.jpg)
+
+### Edge Detection
+
+Filter | Original | Horizontal Edges | Vertical Edges | Both Edges
+--- | --- | --- | --- | ---
+Sobel | ![sample_image](examples/sample.jpg) | ![sobelHorizontalEdges](examples/sobelH.jpg) | ![sobelVerticalEdges](examples/sobelV.jpg) | ![sobelAllEdges](examples/sobel.jpg)
+Prewitt | ![sample_image](examples/sample.jpg) | ![prewittHorizontalEdges](examples/prewittH.jpg) | ![prewittVerticalEdges](examples/prewittV.jpg) | ![prewittAllEdges](examples/prewitt.jpg)
 
 
 **Thanking you ...**
