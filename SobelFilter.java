@@ -180,8 +180,4 @@ class SobelFilter implements EdgeDetection {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    public static void main(String[] args) {
-        SobelFilter sfFilter = new SobelFilter("sample.jpg");
-        System.out.println(sfFilter.filterAndSave("./sobel.jpg", 1));
-    }
 }

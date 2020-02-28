@@ -189,8 +189,4 @@ class PrewittFilter implements EdgeDetection {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    public static void main(String[] args) {
-        SobelFilter sfFilter = new SobelFilter("./examples/sample.jpg");
-        System.out.println(sfFilter.filterAndSave("./prewitt.jpg", 1));
-    }
 }
