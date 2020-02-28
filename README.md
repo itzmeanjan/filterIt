@@ -45,12 +45,18 @@ Order | Mean | Median | Mode | Min
 4 | ![order_4_MeanFiltered](examples/order_4_MeanFiltered.jpg) | ![order_4_MedianFiltered](examples/order_4_MedianFiltered.jpg) | ![order_4_ModeFiltered](examples/order_4_ModeFiltered.jpg) | ![order_4_MinFiltered](examples/order_4_MinFiltered.jpg)
 5 | ![order_5_MeanFiltered](examples/order_5_MeanFiltered.jpg) | ![order_5_MedianFiltered](examples/order_5_MedianFiltered.jpg) | ![order_5_ModeFiltered](examples/order_5_ModeFiltered.jpg) | ![order_5_MinFiltered](examples/order_5_MinFiltered.jpg)
 
-### Edge Detection
+### Edge Detection Filter(s)
 
 Filter | Original | Horizontal Edges | Vertical Edges | Both Edges
 --- | --- | --- | --- | ---
 Sobel | ![sample_image](examples/sample.jpg) | ![sobelHorizontalEdges](examples/sobelH.jpg) | ![sobelVerticalEdges](examples/sobelV.jpg) | ![sobelAllEdges](examples/sobel.jpg)
 Prewitt | ![sample_image](examples/sample.jpg) | ![prewittHorizontalEdges](examples/prewittH.jpg) | ![prewittVerticalEdges](examples/prewittV.jpg) | ![prewittAllEdges](examples/prewitt.jpg)
+
+### GrayScaling
+
+Original | GrayScaled
+--- | ---
+![gray_sample](examples/gray_sample.jpg) | ![grayscaled.jpg](examples/grayscaled.jpg)
 
 
 **Thanking you ...**

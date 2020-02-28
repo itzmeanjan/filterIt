@@ -46,7 +46,7 @@ class GrayScale {
         }
         try {
             ImageIO.write(grayscaled, imageExtension(targetFile), new File(targetFile));
-            return new ReturnVal(0, "sucess");
+            return new ReturnVal(0, "success");
         } catch (IOException io) {
             return new ReturnVal(1, io.toString());
         }
