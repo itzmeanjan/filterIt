@@ -3,7 +3,7 @@ import java.io.File;
 class Driver {
 
     // given a image file name, obtains extension of that image
-    String imageExtension(String fileName) {
+    public static String imageExtension(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
