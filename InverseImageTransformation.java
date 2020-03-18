@@ -40,9 +40,14 @@ class InverseImageTransformation {
     }
 
     /**
-     * Each pixel of one W x H grayscale image is transformed to different value
-     * using predefined function, & resulting image is exported into target file
-     * which is specified while invoking this method.
+     * Given one grayscaled / color image, it can be inversed using this method,
+     * it'll treat each pixel intensity value as RGB of three different component
+     * which might not have same values ( >= 0 && <= 255 )
+     * 
+     * And then it'll explicitly apply inverse function on each of them, which will
+     * be combined for forming new color. If each color components having same
+     * values, they will have same value even after inversing i.e. grayscaled image
+     * stays grayscaled after inversing is done & colored image stays colored
      */
     ReturnVal transform(String targetPath) {
         BufferedImage img = this.getImage();
@@ -51,12 +56,26 @@ class InverseImageTransformation {
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                int newIntensity = this.transformPixel((new Color(img.getRGB(j, i))).getRed(), 255); // image which is
-                                                                                                     // to be
-                                                                                                     // transformed
-                                                                                                     // needs to be
-                                                                                                     // grayscaled
-                transformed.setRGB(j, i, (new Color(newIntensity, newIntensity, newIntensity)).getRGB());
+                Color color = new Color(img.getRGB(j, i)); // color image can be processed using this method
+                transformed.setRGB(j, i,
+                        (new Color(this.transformPixel(color.getRed(), 255), this.transformPixel(color.getGreen(), 255),
+                                this.transformPixel(color.getBlue(), 255))).getRGB()); // each
+                                                                                       // pixel
+                                                                                       // intensity
+                                                                                       // value's
+                                                                                       // different
+                                                                                       // components
+                                                                                       // need
+                                                                                       // to
+                                                                                       // be
+                                                                                       // inversed,
+                                                                                       // which
+                                                                                       // are
+                                                                                       // combined
+                                                                                       // for
+                                                                                       // forming
+                                                                                       // new
+                                                                                       // image
             }
         }
         try {
@@ -70,5 +89,7 @@ class InverseImageTransformation {
     public static void main(String[] args) {
         InverseImageTransformation iTransformation = new InverseImageTransformation("./examples/grayscaled.jpg");
         System.out.println(iTransformation.transform("./examples/inverseTransformed.jpg"));
+        iTransformation = new InverseImageTransformation("./examples/gray_sample.jpg");
+        System.out.println(iTransformation.transform("./examples/inverseTransformedColor.jpg"));
     }
 }

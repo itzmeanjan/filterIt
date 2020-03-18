@@ -56,7 +56,13 @@ Prewitt | ![sample_image](examples/sample.jpg) | ![prewittHorizontalEdges](examp
 
 Original | GrayScaled
 --- | ---
-![gray_sample](examples/gray_sample.jpg) | ![grayscaled.jpg](examples/grayscaled.jpg)
+![gray_sample](examples/gray_sample.jpg) | ![grayscaled](examples/grayscaled.jpg)
 
+### Inverse Pixel Transformation
+
+Type | Original | GrayScaled
+--- | --- | ---
+Grayscaled | ![grayscaled](examples/grayscaled.jpg) | ![inverseTransformed](examples/inverseTransformed.jpg)
+Color | ![gray_sample](examples/gray_sample.jpg) | ![inverseTransformedColor](examples/inverseTransformedColor.jpg)
 
 **Thanking you ...**
