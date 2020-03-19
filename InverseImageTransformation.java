@@ -87,7 +87,7 @@ class InverseImageTransformation {
     }
 
     public static void main(String[] args) {
-        InverseImageTransformation iTransformation = new InverseImageTransformation("./examples/grayscaled.jpg");
+        InverseImageTransformation iTransformation = new InverseImageTransformation("./examples/pulmonary_abscess.jpg");
         System.out.println(iTransformation.transform("./examples/inverseTransformed.jpg"));
         iTransformation = new InverseImageTransformation("./examples/gray_sample.jpg");
         System.out.println(iTransformation.transform("./examples/inverseTransformedColor.jpg"));

@@ -90,7 +90,7 @@ class GammaCorrection {
     }
 
     public static void main(String[] args) {
-        GammaCorrection gCorrection = new GammaCorrection("./examples/grayscaled.jpg");
+        GammaCorrection gCorrection = new GammaCorrection("./examples/pollen.jpg");
         System.out.println(gCorrection.transform("./examples/gammaCorrected_1_2.jpg", 1.0 / 2.0));
         System.out.println(gCorrection.transform("./examples/gammaCorrected_1_3.jpg", 1.0 / 3.0));
         System.out.println(gCorrection.transform("./examples/gammaCorrected_2.jpg", 2.0));

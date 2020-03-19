@@ -60,22 +60,31 @@ Original | GrayScaled
 
 ### Inverse Pixel Transformation
 
-Type | Original | GrayScaled
+Type | Original | Inversed
 --- | --- | ---
-Grayscaled | ![grayscaled](examples/grayscaled.jpg) | ![inverseTransformed](examples/inverseTransformed.jpg)
+Grayscaled | ![pulmonary_abscess](examples/pulmonary_abscess.jpg) | ![inverseTransformed](examples/inverseTransformed.jpg)
 Color | ![gray_sample](examples/gray_sample.jpg) | ![inverseTransformedColor](examples/inverseTransformedColor.jpg)
 
 ### Gamma Correction
 
-Type | γ | Original | GrayScaled
+Type | γ | Original | Gamma Corrected
 --- | --- | --- | ---
-Grayscaled | 1/2 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_1_2.jpg)
-Grayscaled | 1/3 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_1_3.jpg)
-Grayscaled | 2 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_2.jpg)
-Grayscaled | 3 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_3.jpg)
+Grayscaled | 1/2 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_1_2.jpg)
+Grayscaled | 1/3 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_1_3.jpg)
+Grayscaled | 2 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_2.jpg)
+Grayscaled | 3 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_3.jpg)
 Color | 1/2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_2.jpg)
 Color | 1/3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_3.jpg)
 Color | 2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_2.jpg)
 Color | 3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_3.jpg)
+
+### Log Transformation
+
+Type | Base | Original | Log Transformed
+--- | --- | --- | ---
+Grayscaled | e | ![pollen](examples/pollen.jpg) | ![logTransformed](examples/logTransformed_e.jpg)
+Grayscaled | 10 | ![pollen](examples/pollen.jpg) | ![logTransformed](examples/logTransformed_10.jpg)
+Color | e | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_e.jpg)
+Color | 19 | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_10.jpg)
 
 **Thanking you ...**
