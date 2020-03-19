@@ -24,7 +24,7 @@ Time to compile Java classes
 $ find . -name "*.java" | xargs javac
 ```
 
-Now we can run it
+~~Now we can run it~~ [ **To be fixed soon enough** ]
 
 ```bash
 $ java Driver sample.jpg 3 # generates each of mean, median & mode filtered images of order 1, 2, 3
@@ -64,5 +64,18 @@ Type | Original | GrayScaled
 --- | --- | ---
 Grayscaled | ![grayscaled](examples/grayscaled.jpg) | ![inverseTransformed](examples/inverseTransformed.jpg)
 Color | ![gray_sample](examples/gray_sample.jpg) | ![inverseTransformedColor](examples/inverseTransformedColor.jpg)
+
+### Gamma Correction
+
+Type | γ | Original | GrayScaled
+--- | --- | --- | ---
+Grayscaled | 1/2 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_1_2.jpg)
+Grayscaled | 1/3 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_1_3.jpg)
+Grayscaled | 2 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_2.jpg)
+Grayscaled | 3 | ![grayscaled](examples/grayscaled.jpg) | ![gammaCorrected](examples/gammaCorrected_3.jpg)
+Color | 1/2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_2.jpg)
+Color | 1/3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_3.jpg)
+Color | 2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_2.jpg)
+Color | 3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_3.jpg)
 
 **Thanking you ...**
