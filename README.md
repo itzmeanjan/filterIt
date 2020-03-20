@@ -93,4 +93,10 @@ Original | Histogram Equalized
 --- | ---
 ![circulatory_sys](examples/circulatory_sys.jpg) | ![histogramEqualized](examples/histogramEqualized.jpg)
 
+### Contrast Stretching
+
+Original | Contrast Stretched
+--- | ---
+![texture](examples/texture.jpg) | ![contrastStretched](examples/contrastStretched.jpg)
+
 **Thanking you ...**

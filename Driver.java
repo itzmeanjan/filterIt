@@ -56,28 +56,28 @@ class Driver {
         for (int i = 1; i <= order; i++) {
             thrdArr[idx] = new Thread(
                     new Worker(new MeanFilter(fileName),
-                            "order_" + i + "_MeanFiltered." + driver.imageExtension(fileName), i),
+                            "order_" + i + "_MeanFiltered." + ImportExportImage.imageExtension(fileName), i),
                     "Thread_" + (idx + 1));
             idx++;
         }
         for (int i = 1; i <= order; i++) {
             thrdArr[idx] = new Thread(
                     new Worker(new MedianFilter(fileName),
-                            "order_" + i + "_MedianFiltered." + driver.imageExtension(fileName), i),
+                            "order_" + i + "_MedianFiltered." + ImportExportImage.imageExtension(fileName), i),
                     "Thread_" + (idx + 1));
             idx++;
         }
         for (int i = 1; i <= order; i++) {
             thrdArr[idx] = new Thread(
                     new Worker(new ModeFilter(fileName),
-                            "order_" + i + "_ModeFiltered." + driver.imageExtension(fileName), i),
+                            "order_" + i + "_ModeFiltered." + ImportExportImage.imageExtension(fileName), i),
                     "Thread_" + (idx + 1));
             idx++;
         }
         for (int i = 1; i <= order; i++) {
             thrdArr[idx] = new Thread(
                     new Worker(new MinFilter(fileName),
-                            "order_" + i + "_MinFiltered." + driver.imageExtension(fileName), i),
+                            "order_" + i + "_MinFiltered." + ImportExportImage.imageExtension(fileName), i),
                     "Thread_" + (idx + 1));
             idx++;
         }
