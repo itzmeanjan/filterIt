@@ -87,4 +87,10 @@ Grayscaled | 10 | ![pollen](examples/pollen.jpg) | ![logTransformed](examples/lo
 Color | e | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_e.jpg)
 Color | 19 | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_10.jpg)
 
+### Histogram Equalization
+
+Original | Histogram Equalized
+--- | ---
+![circulatory_sys](examples/circulatory_sys.jpg) | ![histogramEqualized](examples/histogramEqualized.jpg)
+
 **Thanking you ...**

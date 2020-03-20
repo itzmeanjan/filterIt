@@ -1,5 +1,5 @@
 import java.awt.Color;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 class HistogramEqualization {
@@ -62,6 +62,7 @@ class HistogramEqualization {
     BufferedImage transform(BufferedImage img) {
         if (img == null)
             return null;
+        img = new GrayScale().grayscale(img);
         double[] cdfs = this.computeCDFs(this.computeProbabilities(img.getWidth() * img.getHeight(),
                 this.getFrequencyDistributionOfIntensities(img)));
         double minCDF = this.getMinCDF(cdfs);
@@ -82,8 +83,7 @@ class HistogramEqualization {
 
     public static void main(String[] args) {
         HistogramEqualization hEqualization = new HistogramEqualization();
-        System.out.println(ImportExportImage.exportImage(
-                hEqualization.transform(new GrayScale().grayscale("./examples/circulatory_sys.jpg")),
+        System.out.println(ImportExportImage.exportImage(hEqualization.transform("./examples/circulatory_sys.jpg"),
                 "./examples/histogramEqualized.jpg"));
     }
 
