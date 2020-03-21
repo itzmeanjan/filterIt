@@ -1,3 +1,5 @@
+import java.awt.image.BufferedImage;
+
 interface EdgeDetection extends Filter {
     abstract int[][] getHorizontalMask(); // generates horizontal kernel of 3x3 size, detects
 
@@ -11,7 +13,11 @@ interface EdgeDetection extends Filter {
     abstract int computeGradient(int gx, int gy); // computes gradient using g = (gx^2 + gy^2)^(1/2), and normalizes
                                                   // value to 0-255 range
 
-    abstract ReturnVal filterAndSaveV(String target, int order); // detects only vertical edges
+    abstract BufferedImage filterH(BufferedImage img, int order);
 
-    abstract ReturnVal filterAndSaveH(String target, int order); // detects only horizontal edges
+    abstract BufferedImage filterH(String src, int order);
+
+    abstract BufferedImage filterV(BufferedImage img, int order);
+
+    abstract BufferedImage filterV(String src, int order);
 }

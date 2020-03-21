@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
  * Contrast Stretching is pretty similar to Histogram Equalization, but rather
  * that computing pixel intensity probability & corresponding CDF values, we'll
  * go for stretching pixel intensity range, which may be intially `a` & `b`,
- * where a > 0 && / || b < 255, but we'll make it 0 to 255. Eventually image
+ * where a > 0 && or || b < 255, but we'll make it 0 to 255. Finally dark image
  * will get brighter.
  */
 class ContrastStretching {

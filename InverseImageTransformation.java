@@ -1,31 +1,11 @@
 import java.awt.Color;
-import java.awt.image.*;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 
 /**
  * Takes an input image file, applies inverse image transformation on each pixel
  * of it, and produces output image, which is exported into specified file.
  */
 class InverseImageTransformation {
-    String filePath; // file on which transformation to be applied
-
-    InverseImageTransformation(String fp) {
-        this.filePath = fp;
-    }
-
-    /**
-     * Reads image & constructs BufferedImage object, which can be used for
-     * manipulating image
-     */
-    private BufferedImage getImage() {
-        try {
-            return ImageIO.read(new File(this.filePath));
-        } catch (IOException io) {
-            return null;
-        }
-    }
 
     /**
      * Each pixel needs to be transformed i.e. pixel intensity value of each pixel
@@ -40,56 +20,40 @@ class InverseImageTransformation {
     }
 
     /**
-     * Given one grayscaled / color image, it can be inversed using this method,
-     * it'll treat each pixel intensity value as RGB of three different component
-     * which might not have same values ( >= 0 && <= 255 )
+     * Given one grayscaled / color image ( buffered ), it can be inversed using
+     * this method, it'll treat each pixel intensity value as RGB of three different
+     * component which might not have same values ( >= 0 && <= 255 )
      * 
      * And then it'll explicitly apply inverse function on each of them, which will
      * be combined for forming new color. If each color components having same
-     * values, they will have same value even after inversing i.e. grayscaled image
-     * stays grayscaled after inversing is done & colored image stays colored
+     * intensity values, they will have same value even after inversing i.e.
+     * grayscaled image stays grayscaled after inversing is done
      */
-    ReturnVal transform(String targetPath) {
-        BufferedImage img = this.getImage();
-        if (img == null)
-            return new ReturnVal(1, "couldn't read source image");
+    BufferedImage transform(BufferedImage img) {
+        if (img == null) {
+            return null;
+        }
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                Color color = new Color(img.getRGB(j, i)); // color image can be processed using this method
+                Color color = new Color(img.getRGB(j, i));
                 transformed.setRGB(j, i,
                         (new Color(this.transformPixel(color.getRed(), 255), this.transformPixel(color.getGreen(), 255),
-                                this.transformPixel(color.getBlue(), 255))).getRGB()); // each
-                                                                                       // pixel
-                                                                                       // intensity
-                                                                                       // value's
-                                                                                       // different
-                                                                                       // components
-                                                                                       // need
-                                                                                       // to
-                                                                                       // be
-                                                                                       // inversed,
-                                                                                       // which
-                                                                                       // are
-                                                                                       // combined
-                                                                                       // for
-                                                                                       // forming
-                                                                                       // new
-                                                                                       // image
+                                this.transformPixel(color.getBlue(), 255))).getRGB());
             }
         }
-        try {
-            ImageIO.write(transformed, Driver.imageExtension(targetPath), new File(targetPath));
-        } catch (IOException io) {
-            return new ReturnVal(1, io.toString());
-        }
-        return new ReturnVal(0, "success");
+        return transformed;
+    }
+
+    BufferedImage transform(String src) {
+        return this.transform(ImportExportImage.importImage(src));
     }
 
     public static void main(String[] args) {
-        InverseImageTransformation iTransformation = new InverseImageTransformation("./examples/pulmonary_abscess.jpg");
-        System.out.println(iTransformation.transform("./examples/inverseTransformed.jpg"));
-        iTransformation = new InverseImageTransformation("./examples/gray_sample.jpg");
-        System.out.println(iTransformation.transform("./examples/inverseTransformedColor.jpg"));
+        InverseImageTransformation iTransformation = new InverseImageTransformation();
+        System.out.println(ImportExportImage.exportImage(iTransformation.transform("./examples/pulmonary_abscess.jpg"),
+                "./examples/inverseTransformed.jpg"));
+        System.out.println(ImportExportImage.exportImage(iTransformation.transform("./examples/gray_sample.jpg"),
+                "./examples/inverseTransformedColor.jpg"));
     }
 }

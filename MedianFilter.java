@@ -1,15 +1,7 @@
 import java.awt.Color;
-import java.awt.image.*;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
 class MedianFilter implements Filter {
-    String filePath;
-
-    MedianFilter(String fp) {
-        this.filePath = fp;
-    }
 
     // swaps two elements of an array, indicated by their indices
     private void swap(int posI, int posJ, int[] pixels) {
@@ -58,59 +50,35 @@ class MedianFilter implements Filter {
         return tmp[tmp.length / 2];
     }
 
-    // reads image content, and returns so;
-    // if something goes wrong, returns null, which is to be
-    // handled by caller
-    private BufferedImage getImage() {
-        BufferedImage img;
-        try {
-            img = ImageIO.read(new File(this.filePath));
-        } catch (IOException io) {
-            img = null;
-        }
-        return img;
-    }
-
     // applies median filter on given image & updates pixels
     // of target image
-    private BufferedImage filter(BufferedImage img, int order) {
-        if (img instanceof BufferedImage) {
-            BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
-            for (int i = 0; i < img.getHeight(); i++) {
-                for (int j = 0; j < img.getWidth(); j++) {
-                    Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
-                    result.setRGB(j, i,
-                            (new Color(this.median(pxl.getNeighbouringPixelsFromImage(img, 'r', order)),
-                                    this.median(pxl.getNeighbouringPixelsFromImage(img, 'g', order)),
-                                    this.median(pxl.getNeighbouringPixelsFromImage(img, 'b', order))).getRGB()));
-                }
-            }
-            return result;
+    @Override
+    public BufferedImage filter(BufferedImage img, int order) {
+        if (img == null) {
+            return null;
         }
-        return null;
+        BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        for (int i = 0; i < img.getHeight(); i++) {
+            for (int j = 0; j < img.getWidth(); j++) {
+                Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
+                result.setRGB(j, i,
+                        (new Color(this.median(pxl.getNeighbouringPixelsFromImage(img, 'r', order)),
+                                this.median(pxl.getNeighbouringPixelsFromImage(img, 'g', order)),
+                                this.median(pxl.getNeighbouringPixelsFromImage(img, 'b', order))).getRGB()));
+            }
+        }
+        return result;
     }
 
-    // applies specific filter & writes filtered image into target file
-    public ReturnVal filterAndSave(String target, int order) {
-        try {
-            if (order < 1)
-                throw new Exception("Bad input : order must be > 0");
-            ImageIO.write(this.filter(this.getImage(), order), imageExtension(target), new File(target));
-            return new ReturnVal(0, "success");
-        } catch (IOException io) {
-            return new ReturnVal(1, io.toString());
-        } catch (Exception e) {
-            return new ReturnVal(1, e.toString());
-        }
+    @Override
+    public BufferedImage filter(String src, int order) {
+        return this.filter(ImportExportImage.importImage(src), order);
     }
 
     // obtains name of this specific filter
+    @Override
     public String filterName() {
         return "Median Filter";
     }
 
-    // obtains file extension of image
-    public String imageExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
 }

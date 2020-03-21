@@ -1,12 +1,9 @@
-// all filters to be written must
-// implement methods declared under following interface,
-// which will finally help us in calling filters from
-// different threads, by passing Filter type ( which is broader )
-// while creating instance of Worker class
+import java.awt.image.BufferedImage;
+
 interface Filter {
-    abstract ReturnVal filterAndSave(String target, int order); // filters image & stores it in target file
+    abstract BufferedImage filter(BufferedImage img, int order);
 
-    abstract String filterName(); // returns current filter name
+    abstract BufferedImage filter(String src, int order);
 
-    abstract String imageExtension(String fileName);
+    abstract String filterName();
 }

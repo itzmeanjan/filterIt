@@ -1,8 +1,5 @@
 import java.awt.Color;
-import java.awt.image.*;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
 
 /**
  * Given an image ( either color or grayscaled ), we'll transform each pixel
@@ -10,23 +7,6 @@ import java.io.IOException;
  * function. Transformation can be controlled using `gamma` value.
  */
 class GammaCorrection {
-
-    String filePath;
-
-    GammaCorrection(String fp) {
-        this.filePath = fp;
-    }
-
-    /**
-     * Reads image from given file, and obtains an instance of BufferedImage class
-     */
-    private BufferedImage getImage() {
-        try {
-            return ImageIO.read(new File(this.filePath));
-        } catch (IOException io) {
-            return null;
-        }
-    }
 
     /**
      * Given intensity of certain pixel & max intensity value ( for 8-bit image
@@ -47,59 +27,51 @@ class GammaCorrection {
     }
 
     /**
-     * Given a target file path, where output image to be exported & γ value, which
-     * will control degree of transformation of any pixel, we'll compute output
-     * image i.e. transformed image
+     * Applies transformation function on each pixel of buffered image ( either
+     * color or grayscaled image ) & returns modified image
      */
-    ReturnVal transform(String targetPath, double gamma) {
-        BufferedImage img = this.getImage();
-        if (img == null)
-            return new ReturnVal(1, "couldn't read source image");
+    BufferedImage transform(BufferedImage img, double gamma) {
+        if (img == null) {
+            return null;
+        }
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                Color color = new Color(img.getRGB(j, i)); // color image can be processed using this method
+                Color color = new Color(img.getRGB(j, i));
                 transformed.setRGB(j, i,
                         (new Color(this.transformPixel(gamma, color.getRed(), 255),
                                 this.transformPixel(gamma, color.getGreen(), 255),
-                                this.transformPixel(gamma, color.getBlue(), 255))).getRGB()); // each
-                // pixel
-                // intensity
-                // value's
-                // different
-                // components ( i.e. R, G or B )
-                // need
-                // to
-                // be
-                // inversed,
-                // which
-                // are
-                // combined
-                // for
-                // forming
-                // new
-                // image
+                                this.transformPixel(gamma, color.getBlue(), 255))).getRGB());
             }
         }
-        try {
-            ImageIO.write(transformed, Driver.imageExtension(targetPath), new File(targetPath));
-        } catch (IOException io) {
-            return new ReturnVal(1, io.toString());
-        }
-        return new ReturnVal(0, "success");
+        return transformed;
+    }
+
+    /**
+     * Another interface to talk to gamma correction transformation function
+     */
+    BufferedImage transform(String src, double gamma) {
+        return this.transform(ImportExportImage.importImage(src), gamma);
     }
 
     public static void main(String[] args) {
-        GammaCorrection gCorrection = new GammaCorrection("./examples/pollen.jpg");
-        System.out.println(gCorrection.transform("./examples/gammaCorrected_1_2.jpg", 1.0 / 2.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrected_1_3.jpg", 1.0 / 3.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrected_2.jpg", 2.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrected_3.jpg", 3.0));
-        gCorrection = new GammaCorrection("./examples/gray_sample.jpg");
-        System.out.println(gCorrection.transform("./examples/gammaCorrectedColor_1_2.jpg", 1.0 / 2.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrectedColor_1_3.jpg", 1.0 / 3.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrectedColor_2.jpg", 2.0));
-        System.out.println(gCorrection.transform("./examples/gammaCorrectedColor_3.jpg", 3.0));
+        GammaCorrection gCorrection = new GammaCorrection();
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/pollen.jpg", 1.0 / 2.0),
+                "./examples/gammaCorrected_1_2.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/pollen.jpg", 1.0 / 3.0),
+                "./examples/gammaCorrected_1_3.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/pollen.jpg", 2.0),
+                "./examples/gammaCorrected_2.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/pollen.jpg", 3.0),
+                "./examples/gammaCorrected_3.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/gray_sample.jpg", 1.0 / 2.0),
+                "./examples/gammaCorrectedColor_1_2.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/gray_sample.jpg", 1.0 / 3.0),
+                "./examples/gammaCorrectedColor_1_3.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/gray_sample.jpg", 2.0),
+                "./examples/gammaCorrectedColor_2.jpg"));
+        System.out.println(ImportExportImage.exportImage(gCorrection.transform("./examples/gray_sample.jpg", 3.0),
+                "./examples/gammaCorrectedColor_3.jpg"));
     }
 
 }
