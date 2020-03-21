@@ -9,7 +9,7 @@ import java.io.File;
  * Helper class to read content of an image into BufferedImage object & write
  * BufferedImage into image file
  */
-class ImportExportImage {
+public class ImportExportImage {
     /**
      * Reads content of specified image file into a BufferedImage object
      */

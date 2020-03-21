@@ -2,24 +2,14 @@ package in.itzmeanjan.filterit;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Takes an input image file, applies inverse image transformation on each pixel
  * of it, and produces output image, which is exported into specified file.
  */
-class InverseImageTransformation {
-
-    /**
-     * Each pixel needs to be transformed i.e. pixel intensity value of each pixel
-     * needs to be mapped to different value using some function
-     * 
-     * Here that transformation function is : I(x, y) = L - 1 - I(x, y), where L-1 =
-     * 255 for 8-bit gray scaled image i.e. highest value that pixel intensity can
-     * possibly be.
-     */
-    private int transformPixel(int intensity, int maxIntensity) {
-        return maxIntensity - intensity;
-    }
+public class InverseImageTransformation {
 
     /**
      * Given one grayscaled / color image ( buffered ), it can be inversed using
@@ -31,23 +21,22 @@ class InverseImageTransformation {
      * intensity values, they will have same value even after inversing i.e.
      * grayscaled image stays grayscaled after inversing is done
      */
-    BufferedImage transform(BufferedImage img) {
+    public BufferedImage transform(BufferedImage img) {
         if (img == null) {
             return null;
         }
+        ExecutorService eService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                Color color = new Color(img.getRGB(j, i));
-                transformed.setRGB(j, i,
-                        (new Color(this.transformPixel(color.getRed(), 255), this.transformPixel(color.getGreen(), 255),
-                                this.transformPixel(color.getBlue(), 255))).getRGB());
+                eService.execute(new InverseImageTransformationWorker(i, j, new Color(img.getRGB(j, i)), transformed));
             }
         }
+        eService.shutdown();
         return transformed;
     }
 
-    BufferedImage transform(String src) {
+    public BufferedImage transform(String src) {
         return this.transform(ImportExportImage.importImage(src));
     }
 
