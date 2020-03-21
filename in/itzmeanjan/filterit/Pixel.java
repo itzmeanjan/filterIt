@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 

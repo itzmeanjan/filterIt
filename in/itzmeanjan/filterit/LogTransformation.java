@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -57,18 +59,6 @@ class LogTransformation {
      */
     BufferedImage transform(String src, double base) {
         return this.transform(ImportExportImage.importImage(src), base);
-    }
-
-    public static void main(String[] args) {
-        LogTransformation lTransformation = new LogTransformation();
-        System.out.println(ImportExportImage.exportImage(lTransformation.transform("./examples/pollen.jpg", Math.E),
-                "./examples/logTransformed_e.jpg"));
-        System.out.println(ImportExportImage.exportImage(lTransformation.transform("./examples/pollen.jpg", 10),
-                "./examples/logTransformed_10.jpg"));
-        System.out.println(ImportExportImage.exportImage(lTransformation.transform("./examples/abstract.jpg", Math.E),
-                "./examples/logTransformedColor_e.jpg"));
-        System.out.println(ImportExportImage.exportImage(lTransformation.transform("./examples/abstract.jpg", 10),
-                "./examples/logTransformedColor_10.jpg"));
     }
 
 }

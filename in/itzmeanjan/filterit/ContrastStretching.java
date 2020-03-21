@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -84,11 +86,5 @@ class ContrastStretching {
      */
     BufferedImage transform(String src) {
         return this.transform(ImportExportImage.importImage(src));
-    }
-
-    public static void main(String[] args) {
-        ContrastStretching cStretching = new ContrastStretching();
-        System.out.println(ImportExportImage.exportImage(cStretching.transform("./examples/texture.jpg"),
-                "./examples/contrastStretched.jpg"));
     }
 }

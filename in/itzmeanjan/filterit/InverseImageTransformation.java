@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
@@ -49,11 +51,4 @@ class InverseImageTransformation {
         return this.transform(ImportExportImage.importImage(src));
     }
 
-    public static void main(String[] args) {
-        InverseImageTransformation iTransformation = new InverseImageTransformation();
-        System.out.println(ImportExportImage.exportImage(iTransformation.transform("./examples/pulmonary_abscess.jpg"),
-                "./examples/inverseTransformed.jpg"));
-        System.out.println(ImportExportImage.exportImage(iTransformation.transform("./examples/gray_sample.jpg"),
-                "./examples/inverseTransformedColor.jpg"));
-    }
 }

@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -129,12 +131,6 @@ class HistogramEqualization {
      */
     BufferedImage transform(String src) {
         return this.transform(ImportExportImage.importImage(src));
-    }
-
-    public static void main(String[] args) {
-        HistogramEqualization hEqualization = new HistogramEqualization();
-        System.out.println(ImportExportImage.exportImage(hEqualization.transform("./examples/circulatory_sys.jpg"),
-                "./examples/histogramEqualized.jpg"));
     }
 
 }

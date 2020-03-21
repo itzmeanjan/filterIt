@@ -1,3 +1,5 @@
+package in.itzmeanjan.filterit;
+
 // holds status code & message for a computation performed
 // in a method, can be used as a return value
 // status code, 0 - success
