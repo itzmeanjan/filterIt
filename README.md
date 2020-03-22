@@ -2,73 +2,100 @@
 
 ![banner](examples/banner.jpg)
 
-Another Order **n** _( >= 1 )_ Image Filtering implementation in Java. **Show some** :heart:
+~~Another Order **n** _( >= 1 )_ Image Filtering implementation in Java.~~ **Show some** :heart:
 
-## examples
+**Not anymore just an image filtering implementation, rather I planned to extend it to also include pixel transformation implementations _( where each of which is written from scratch )_**
 
-### Spatial Filter(s)
+**What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:
 
-Order | Mean | Median | Mode | Min
---- | --- | --- | --- | ---
-0 | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg) | ![sample_image](examples/sample.jpg)
-1 | ![order_1_MeanFiltered](examples/order_1_MeanFiltered.jpg) | ![order_1_MedianFiltered](examples/order_1_MedianFiltered.jpg) | ![order_1_ModeFiltered](examples/order_1_ModeFiltered.jpg) | ![order_1_MinFiltered](examples/order_1_MinFiltered.jpg)
-2 | ![order_2_MeanFiltered](examples/order_2_MeanFiltered.jpg) | ![order_2_MedianFiltered](examples/order_2_MedianFiltered.jpg) | ![order_2_ModeFiltered](examples/order_2_ModeFiltered.jpg) | ![order_2_MinFiltered](examples/order_2_MinFiltered.jpg)
-3 | ![order_3_MeanFiltered](examples/order_3_MeanFiltered.jpg) | ![order_3_MedianFiltered](examples/order_3_MedianFiltered.jpg) | ![order_3_ModeFiltered](examples/order_3_ModeFiltered.jpg) | ![order_3_MinFiltered](examples/order_3_MinFiltered.jpg)
-4 | ![order_4_MeanFiltered](examples/order_4_MeanFiltered.jpg) | ![order_4_MedianFiltered](examples/order_4_MedianFiltered.jpg) | ![order_4_ModeFiltered](examples/order_4_ModeFiltered.jpg) | ![order_4_MinFiltered](examples/order_4_MinFiltered.jpg)
-5 | ![order_5_MeanFiltered](examples/order_5_MeanFiltered.jpg) | ![order_5_MedianFiltered](examples/order_5_MedianFiltered.jpg) | ![order_5_ModeFiltered](examples/order_5_ModeFiltered.jpg) | ![order_5_MinFiltered](examples/order_5_MinFiltered.jpg)
+_Help me in improving it :)_
 
-### Edge Detection Filter(s)
+## implementation(s)
 
-Filter | Original | Horizontal Edges | Vertical Edges | Both Edges
---- | --- | --- | --- | ---
-Sobel | ![sample_image](examples/sample.jpg) | ![sobelHorizontalEdges](examples/sobelH.jpg) | ![sobelVerticalEdges](examples/sobelV.jpg) | ![sobelAllEdges](examples/sobel.jpg)
-Prewitt | ![sample_image](examples/sample.jpg) | ![prewittHorizontalEdges](examples/prewittH.jpg) | ![prewittVerticalEdges](examples/prewittV.jpg) | ![prewittAllEdges](examples/prewitt.jpg)
+### Spatial Filters
 
-### GrayScaling
+- [x] [Mean Filter](./docs/meanFilter.md)
+- [x] [Median Filter](./docs/medianFilter.md)
+- [x] [Mode Filter](./docs/modeFilter.md)
+- [x] [Min Filter](./docs/minFilter.md)
 
-Original | GrayScaled
---- | ---
-![gray_sample](examples/gray_sample.jpg) | ![grayscaled](examples/grayscaled.jpg)
+### Edge Detection Filters
 
-### Inverse Pixel Transformation
+- [x] [Sobel Filter](./docs/sobelFilter.md)
+- [x] [Prewitt Filter](./docs/prewittFilter.md)
+- [] [Laplacian Filter](.)
 
-Type | Original | Inversed
---- | --- | ---
-Grayscaled | ![pulmonary_abscess](examples/pulmonary_abscess.jpg) | ![inverseTransformed](examples/inverseTransformed.jpg)
-Color | ![gray_sample](examples/gray_sample.jpg) | ![inverseTransformedColor](examples/inverseTransformedColor.jpg)
+### Gray Scaling
 
-### Gamma Correction
+- [x] [Gray Scaling](./docs/grayscaling.md)
 
-Type | γ | Original | Gamma Corrected
---- | --- | --- | ---
-Grayscaled | 1/2 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_1_2.jpg)
-Grayscaled | 1/3 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_1_3.jpg)
-Grayscaled | 2 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_2.jpg)
-Grayscaled | 3 | ![pollen](examples/pollen.jpg) | ![gammaCorrected](examples/gammaCorrected_3.jpg)
-Color | 1/2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_2.jpg)
-Color | 1/3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_1_3.jpg)
-Color | 2 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_2.jpg)
-Color | 3 | ![gray_sample](examples/gray_sample.jpg) | ![gammaCorrectedColor](examples/gammaCorrectedColor_3.jpg)
+### Pixel Transformation
 
-### Log Transformation
+- [x] [Inverse Transformation](./docs/inverseTransformation.md)
+- [x] [Gamma Correction](./docs/gammaCorrection.md)
+- [x] [Log Transformation](./docs/logTransformation.md)
+- [x] [Histogram Equalization](./docs/histogramEqualization.md)
+- [x] [Contrast Stretching](./docs/contrastStretching.md)
 
-Type | Base | Original | Log Transformed
---- | --- | --- | ---
-Grayscaled | e | ![pollen](examples/pollen.jpg) | ![logTransformed](examples/logTransformed_e.jpg)
-Grayscaled | 10 | ![pollen](examples/pollen.jpg) | ![logTransformed](examples/logTransformed_10.jpg)
-Color | e | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_e.jpg)
-Color | 19 | ![abstract](examples/abstract.jpg) | ![logTransformedColor](examples/logTransformedColor_10.jpg)
+## usage
 
-### Histogram Equalization
+- Make sure you've JDK installed on your machine. I've used `openjdk version "1.8.0_232-solus"`; check yours using
 
-Original | Histogram Equalized
---- | ---
-![circulatory_sys](examples/circulatory_sys.jpg) | ![histogramEqualized](examples/histogramEqualized.jpg)
+```bash
+$ java -version
+$ javac -version
+```
 
-### Contrast Stretching
+- Clone this repo into your machine
 
-Original | Contrast Stretched
---- | ---
-![texture](examples/texture.jpg) | ![contrastStretched](examples/contrastStretched.jpg)
+```bash
+$ git clone https://github.com/itzmeanjan/filterIt.git
+```
 
-**Thanking you ...**
+- Get into `filterIt` directory
+
+```bash
+$ cd filterIt
+```
+
+- Create a Java source file in this directory
+
+```bash
+$ touch Main.java
+```
+
+- Open this file using your favourite text editor & first import `in.itzmeanjan.filterit.*`
+
+```java
+import in.itzmeanjan.filterit.*;
+```
+
+- Start defining your class, write a main method, inside which you can now call any implementation which are present in this package
+
+```java
+import in.itzmeanjan.filterit.*;
+
+class Main {
+    public static void main(String[] args) {
+        InverseImageTransformation iTransformation = new InverseImageTransformation();
+        // make sure you're x.jpg present in this directory
+        System.out.println(ImportExportImage.exportImage(iTransformation.transform("./x.jpg"), "./y.jpg"));
+    }
+}
+```
+
+- Compile & run it
+
+```bash
+$ javac Main.java
+$ java Main
+```
+
+## contribution
+
+If you want to help me in improving this package, you're very much welcome. First fork this repo & then clone it into your machine. Now you can start working on it. Finally submit a PR :wink:
+
+What I'm currently interested in is, implementing different pixel operations i.e. +, -, *, /, %, &, |, ! etc. If you can help me in getting those implemented, that'll be great.
+
+
+_Thanking you ..._
