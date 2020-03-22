@@ -23,7 +23,7 @@ _Help me in improving it :)_
 
 - [x] [Sobel Filter](./docs/sobelFilter.md)
 - [x] [Prewitt Filter](./docs/prewittFilter.md)
-- [] [Laplacian Filter](.)
+- [ ] [Laplacian Filter](.)
 
 ### Gray Scaling
 
