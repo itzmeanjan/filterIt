@@ -2,57 +2,45 @@ package in.itzmeanjan.filterit;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Given an image ( either color or grayscaled ), we'll transform each pixel
  * intensity of that image using power law transformation / gamma correction
- * function. Transformation can be controlled using `gamma` value.
+ * function. Degree of transformation can be controlled using `gamma` value.
  */
-class GammaCorrection {
-
-        /**
-         * Given intensity of certain pixel & max intensity value ( for 8-bit image
-         * it'll be 255 ), we'll simply divide intensity by max intensity, which will
-         * give us normalized intensity value ∈ [0, 1]
-         */
-        private double normalizeIntensity(int intensity, int maxIntensity) {
-                return (double) intensity / (double) maxIntensity;
-        }
-
-        /**
-         * Transforms single color component's ( i.e. R, G or B ) intensity value for a
-         * pixel, using I(x, y) = 255 * e ^ ( γ * ln(I(x, y)) ), returns rounded value
-         * because pixel intensity can't be floating point value
-         */
-        private int transformPixel(double gamma, int intensity, int maxIntensity) {
-                return (int) (255
-                                * Math.pow(Math.E, gamma * Math.log(this.normalizeIntensity(intensity, maxIntensity))));
-        }
+public class GammaCorrection {
 
         /**
          * Applies transformation function on each pixel of buffered image ( either
          * color or grayscaled image ) & returns modified image
+         * 
+         * Concurrent processing has been incorporated, using Java ExecutorService,
+         * where #-of available CPU cores ( to JVM ) many working threads to be created,
+         * they'll process each pixel & get free & again if any job is avaiable that's
+         * to be thrown at them ... this keeps going on i.e. makes processing faster for
+         * large images
          */
         BufferedImage transform(BufferedImage img, double gamma) {
                 if (img == null) {
                         return null;
                 }
+                ExecutorService eService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
                 BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
                 for (int i = 0; i < transformed.getHeight(); i++) {
                         for (int j = 0; j < transformed.getWidth(); j++) {
-                                Color color = new Color(img.getRGB(j, i));
-                                transformed.setRGB(j, i,
-                                                (new Color(this.transformPixel(gamma, color.getRed(), 255),
-                                                                this.transformPixel(gamma, color.getGreen(), 255),
-                                                                this.transformPixel(gamma, color.getBlue(), 255)))
-                                                                                .getRGB());
+                                eService.execute(new GammaCorrectionWorker(i, j, gamma, new Color(img.getRGB(j, i)),
+                                                transformed));
                         }
                 }
+                eService.shutdown();
                 return transformed;
         }
 
         /**
-         * Another interface to talk to gamma correction transformation function
+         * Another interface to talk to gamma correction transformation function, where
+         * you get the opportunity to pass path to image file
          */
         BufferedImage transform(String src, double gamma) {
                 return this.transform(ImportExportImage.importImage(src), gamma);
