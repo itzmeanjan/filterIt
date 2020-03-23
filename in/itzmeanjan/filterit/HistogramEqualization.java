@@ -3,6 +3,8 @@ package in.itzmeanjan.filterit;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Applies histrogram equalization transformation to distribute pixel intensity
@@ -41,7 +43,7 @@ class HistogramEqualization {
     }
 
     /**
-     * Computes& caches all pixel intensity probability values
+     * Computes & caches all pixel intensity probability values
      */
     private double[] computeProbabilities(int pixelC, HashMap<Integer, Integer> hMap) {
         double[] prob = new double[256];
@@ -52,7 +54,7 @@ class HistogramEqualization {
 
     /**
      * Computes Cumulative Distribution Function for a given intensity value, using
-     * this formula : Σ p(i), i = 0; i<=intensity; i++, were p(i) = probability of
+     * this formula : Σ p(i), i = 0; i <= intensity; i++, were p(i) = probability of
      * finding intensity value i ( 0 <= i <= 255 ), which is precomputed & cached
      */
     private double getCDF(int intensity, double[] prob) {
@@ -79,23 +81,12 @@ class HistogramEqualization {
      */
     private double getMinCDF(double[] cdfs) {
         double min = Double.MAX_VALUE;
-        for (int i = 0; i < cdfs.length; i++) {
-            if (min > cdfs[i]) {
-                min = cdfs[i];
+        for (double v : cdfs) {
+            if (min > v) {
+                min = v;
             }
         }
         return min;
-    }
-
-    /**
-     * Computes transformed pixel intensity value using Histrogram Equalization
-     * function
-     * 
-     * I(x, y) = round( 255 * (CDF - minCDF) / (1 - minCDF) ), where CDF for I(x, y)
-     * is already computed & cached
-     */
-    private int transformPixel(double minCDF, double cdf, int maxIntensity) {
-        return (int) Math.round(((cdf - minCDF) / (1.0 - minCDF)) * maxIntensity);
     }
 
     /**
@@ -106,6 +97,8 @@ class HistogramEqualization {
      * 
      * Finally updated image buffer to be returned which can be either exported into
      * file & can be used for further processing purposes.
+     * 
+     * Concurrency support incorporated using thread pool.
      */
     BufferedImage transform(BufferedImage img) {
         if (img == null)
@@ -114,14 +107,15 @@ class HistogramEqualization {
         double[] cdfs = this.computeCDFs(this.computeProbabilities(img.getWidth() * img.getHeight(),
                 this.getFrequencyDistributionOfIntensities(img)));
         double minCDF = this.getMinCDF(cdfs);
+        ExecutorService eService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                int transformedIntensity = this.transformPixel(minCDF, cdfs[new Color(img.getRGB(j, i)).getRed()], 255);
-                transformed.setRGB(j, i,
-                        (new Color(transformedIntensity, transformedIntensity, transformedIntensity)).getRGB());
+                eService.execute(
+                        new HistogramEqualizationWorker(i, j, minCDF, cdfs, new Color(img.getRGB(j, i)), transformed));
             }
         }
+        eService.shutdown();
         return transformed;
     }
 
