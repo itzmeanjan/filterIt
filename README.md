@@ -4,6 +4,8 @@
 
 ~~Another Order **n** _( >= 1 )_ Image Filtering implementation in Java.~~ **Show some** :heart:
 
+![banner_2](examples/banner_2.jpg)
+
 **Not anymore just an image filtering implementation, rather I planned to extend it to also include pixel transformation implementations _( where each of which is written from scratch )_**
 
 **What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:
