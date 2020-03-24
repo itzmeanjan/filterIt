@@ -6,22 +6,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Given an image ( either color or grayscaled ), we'll trasform each pixel
- * intensity value by using one logarithm based function & output image to be
- * buffered.
+ * Inverse log transformation just works opposite of Log Transformation, it
+ * reduces pixel intensity values, which eventually makes image darker
  * 
- * Transformation can be controlled by changing `base` value of logarithm,
- * mostly we'll use e or 10.
+ * Check examples at
+ * https://github.com/itzmeanjan/filterIt/blob/master/docs/inverseLogTransformation.md
  */
-public class LogTransformation {
-
-    /**
-     * Computes `k` value to be used in transformation function ( implemented just
-     * below ), using ( maxIntensity / ln( 1 + maxIntensity ) ) formula.
-     */
-    double getK(double base, int maxIntensity) {
-        return (double) maxIntensity / (Math.log(1 + maxIntensity) / Math.log(base));
-    }
+public class InverseLogTransformation extends LogTransformation {
 
     /**
      * Given an instance of BufferedImage class & logarithm base value i.e. 10 or e,
@@ -33,7 +24,8 @@ public class LogTransformation {
      * starting with as many number of threads ( in threadpool ) as many CPU cores
      * are made avaiable to JVM
      */
-    BufferedImage transform(BufferedImage img, double base) {
+    @Override
+    public BufferedImage transform(BufferedImage img, double base) {
         if (img == null)
             return null;
         double k = this.getK(base, 255);
@@ -41,7 +33,8 @@ public class LogTransformation {
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                eService.execute(new LogTransformationWorker(i, j, base, k, new Color(img.getRGB(j, i)), transformed));
+                eService.execute(
+                        new InverseLogTransformationWorker(i, j, base, k, new Color(img.getRGB(j, i)), transformed));
             }
         }
         eService.shutdown();
@@ -52,8 +45,8 @@ public class LogTransformation {
      * Given a source image file, which will be buffered and above defined method to
      * be invoked with that buffered image, returns transformed image
      */
-    BufferedImage transform(String src, double base) {
+    @Override
+    public BufferedImage transform(String src, double base) {
         return this.transform(ImportExportImage.importImage(src), base);
     }
-
 }

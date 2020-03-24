@@ -9,25 +9,18 @@ import java.awt.Color;
  * pool, which was initially defined
  */
 class LogTransformationWorker implements Runnable {
-    private int idxI, idxJ;
-    private double lBase;
-    private Color color;
-    private BufferedImage sink;
+    int idxI, idxJ;
+    double lBase, k;
+    Color color;
+    BufferedImage sink;
 
-    LogTransformationWorker(int i, int j, double lBase, Color color, BufferedImage sink) {
+    LogTransformationWorker(int i, int j, double lBase, double k, Color color, BufferedImage sink) {
         this.idxI = i;
         this.idxJ = j;
         this.lBase = lBase;
+        this.k = k;
         this.color = color;
         this.sink = sink;
-    }
-
-    /**
-     * Computes `k` value to be used in transformation function ( implemented just
-     * below ), using ( maxIntensity / ln( 1 + maxIntensity ) ) formula.
-     */
-    private double getK(double base, int maxIntensity) {
-        return (double) maxIntensity / (Math.log(1 + maxIntensity) / Math.log(this.lBase));
     }
 
     /**
@@ -36,8 +29,8 @@ class LogTransformationWorker implements Runnable {
      * I(x, y) = k * ln( 1 + I(x, y) ), function to be used for transformation
      * purpose. Returns rounded value.
      */
-    private int transformPixel(double base, int intensity, int maxIntensity) {
-        return (int) (this.getK(base, maxIntensity) * (Math.log(1 + intensity) / Math.log(this.lBase)));
+    int transformPixel(double base, int intensity) {
+        return (int) (this.k * (Math.log(1 + intensity) / Math.log(this.lBase)));
     }
 
     /**
@@ -51,8 +44,8 @@ class LogTransformationWorker implements Runnable {
     @Override
     public void run() {
         this.sink.setRGB(this.idxJ, this.idxI,
-                (new Color(this.transformPixel(this.lBase, color.getRed(), 255),
-                        this.transformPixel(this.lBase, color.getGreen(), 255),
-                        this.transformPixel(this.lBase, color.getBlue(), 255))).getRGB());
+                (new Color(this.transformPixel(this.lBase, color.getRed()),
+                        this.transformPixel(this.lBase, color.getGreen()),
+                        this.transformPixel(this.lBase, color.getBlue()))).getRGB());
     }
 }

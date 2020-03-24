@@ -34,6 +34,7 @@ _Help me in improving it :)_
 - [x] [Inverse Transformation](./docs/inverseTransformation.md)
 - [x] [Gamma Correction](./docs/gammaCorrection.md)
 - [x] [Log Transformation](./docs/logTransformation.md)
+- [x] [Inverse Log Transformation](./docs/inverseLogTransformation.md)
 - [x] [Histogram Equalization](./docs/histogramEqualization.md)
 - [x] [Contrast Stretching](./docs/contrastStretching.md)
 
