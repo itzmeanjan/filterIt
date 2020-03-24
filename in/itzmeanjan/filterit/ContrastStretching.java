@@ -2,6 +2,8 @@ package in.itzmeanjan.filterit;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Contrast Stretching is pretty similar to Histogram Equalization, but rather
@@ -10,7 +12,7 @@ import java.awt.image.BufferedImage;
  * where a > 0 && or || b < 255, but we'll make it 0 to 255. Finally dark image
  * will get brighter.
  */
-class ContrastStretching {
+public class ContrastStretching {
 
     /**
      * Given a grayscale image, which is already read into BufferedImage, we'll find
@@ -45,20 +47,12 @@ class ContrastStretching {
     }
 
     /**
-     * We'll transform pixel intensity value using stretching function & return
-     * transformed value ( >= 0 && <= 255 ), which will be put into (x, y) position
-     * of modified image buffer
-     */
-    private int transformPixel(int minIntensity, int maxIntensity, int intensity, int maxPossibleIntensity) {
-        return (int) (maxPossibleIntensity
-                * ((double) (intensity - minIntensity) / (double) (maxIntensity - minIntensity)));
-    }
-
-    /**
      * For each pixel intensity value of a grayscale image, we'll apply afore
      * defined transformation function & put transformed pixel intensity value in
      * each cell, which will be returned ( that can be either exported or processed
      * further )
+     * 
+     * Concurrency incorporated using java Thread pool.
      */
     BufferedImage transform(BufferedImage img) {
         if (img == null) {
@@ -67,15 +61,15 @@ class ContrastStretching {
         img = (new GrayScale()).grayscale(img);
         int minIntensity = this.minIntensity(img);
         int maxIntensity = this.maxIntensity(img);
+        ExecutorService eService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         BufferedImage transformed = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         for (int i = 0; i < transformed.getHeight(); i++) {
             for (int j = 0; j < transformed.getWidth(); j++) {
-                int transformedIntensity = this.transformPixel(minIntensity, maxIntensity,
-                        new Color(img.getRGB(j, i)).getRed(), 255);
-                transformed.setRGB(j, i,
-                        (new Color(transformedIntensity, transformedIntensity, transformedIntensity)).getRGB());
+                eService.execute(new ContrastStretchingWorker(i, j, minIntensity, maxIntensity,
+                        new Color(img.getRGB(j, i)), transformed));
             }
         }
+        eService.shutdown();
         return transformed;
     }
 

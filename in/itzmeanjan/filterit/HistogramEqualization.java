@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
  * given image. But this method can be only applied on grayscaled images, so
  * we'll first grayscale it & then perform further ops on top of it
  */
-class HistogramEqualization {
+public class HistogramEqualization {
 
     /**
      * Given a grayscale image we'll obtain a mapping from pixel intensity ->
