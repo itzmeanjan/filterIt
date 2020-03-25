@@ -40,6 +40,10 @@ _Help me in improving it :)_
 - [x] [Histogram Equalization](./docs/histogramEqualization.md)
 - [x] [Contrast Stretching](./docs/contrastStretching.md)
 
+### Image Transposition
+
+- [x] [Transposed Image](./docs/transpose.md)
+
 ## usage
 
 - Make sure you've JDK installed on your machine. I've used `openjdk version "1.8.0_232-solus"`; check yours using
