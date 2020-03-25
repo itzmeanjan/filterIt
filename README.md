@@ -6,7 +6,9 @@
 
 ![banner_2](examples/banner_2.jpg)
 
-**Not anymore just an image filtering implementation, rather I planned to extend it to also include pixel transformation implementations _( where each of which is written from scratch )_**
+**Not anymore just an image filtering implementation, rather I planned to extend it to also include pixel transformation & image rotation implementations _( where each of which is written from scratch )_**
+
+![banner_3](examples/banner_3.jpg)
 
 **What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:
 
@@ -25,7 +27,7 @@ _Help me in improving it :)_
 
 - [x] [Sobel Filter](./docs/sobelFilter.md)
 - [x] [Prewitt Filter](./docs/prewittFilter.md)
-- [ ] [Laplacian Filter](.)
+- [ ] [Laplacian Filter]()
 
 ### Gray Scaling
 
@@ -43,6 +45,11 @@ _Help me in improving it :)_
 ### Image Transposition
 
 - [x] [Transposed Image](./docs/transpose.md)
+
+### Rotation
+
+- [x] [Horizontal Rotation](./docs/horizontalRotation.md)
+- [ ] [Vertical Rotation]()
 
 ## usage
 
