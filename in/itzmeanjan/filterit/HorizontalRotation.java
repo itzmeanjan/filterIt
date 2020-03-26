@@ -3,6 +3,7 @@ package in.itzmeanjan.filterit;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Horizontally rotates each row i.e. perform side rotation on each row &
@@ -26,6 +27,12 @@ public class HorizontalRotation implements Rotation {
         for (int i = 0; i < img.getHeight(); eService.execute(new HorizontalRotationWorker(i++, img, sink)))
             ;
         eService.shutdown();
+        try {
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            sink = null;
+        }
         return sink;
     }
 

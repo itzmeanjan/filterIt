@@ -11,8 +11,7 @@ import java.awt.image.BufferedImage;
 class HorizontalRotationWorker implements Runnable {
 
     private int row;
-    private BufferedImage src;
-    private BufferedImage sink;
+    private BufferedImage src, sink;
 
     HorizontalRotationWorker(int row, BufferedImage src, BufferedImage sink) {
         this.row = row;
@@ -49,8 +48,7 @@ class HorizontalRotationWorker implements Runnable {
      */
     @Override
     public void run() {
-        for (int i = 0, j = this.src.getWidth() - 1; j - i > 0; i++, j--) {
-            this.swap(i, j);
-        }
+        for (int i = 0, j = this.src.getWidth() - 1; j - i > 0; this.swap(i++, j--))
+            ;
     }
 }
