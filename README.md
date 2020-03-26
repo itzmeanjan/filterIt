@@ -49,7 +49,7 @@ _Help me in improving it :)_
 ### Rotation
 
 - [x] [Horizontal Rotation](./docs/horizontalRotation.md)
-- [ ] [Vertical Rotation]()
+- [x] [Vertical Rotation](./docs/verticalRotation.md)
 
 ## usage
 

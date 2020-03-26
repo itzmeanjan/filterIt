@@ -1,4 +1,4 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.rotation;
 
 import java.awt.image.BufferedImage;
 

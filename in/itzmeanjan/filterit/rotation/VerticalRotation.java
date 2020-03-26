@@ -1,21 +1,25 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.rotation;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import in.itzmeanjan.filterit.ImportExportImage;
 
 /**
- * Horizontally rotates each row i.e. perform side rotation on each row &
- * obtains new buffered image
+ * Vertically rotates each column of given buffered image, returns a new
+ * buffered image
  * 
- * A row, [2, 3, 4, 5] to be rotated to [5, 4, 3, 2]
+ * Let's assume we've a column vector [1, 2, 3, 4, 5] of size 5x1, then its
+ * rotated i.e. reversed form will be like [5, 4, 3, 2, 1] which is also 5x1
  */
-public class HorizontalRotation implements Rotation {
+public class VerticalRotation implements Rotation {
     /**
-     * Goes over each row of buffered image & rotates it left to right, where each
-     * row rotation to be done by one thread i.e. concurrently rows can be rotated
-     * by different threads
+     * Given a buffered image we'll reverse each column and they will be no doubt
+     * done concurrently, leveraging power of modern multicore processors
+     * 
+     * Reversing each column is what we call vertically rotating image i.e. rotating
+     * image across its Y-axis 180°
      */
     @Override
     public BufferedImage rotate(BufferedImage img) {
@@ -24,7 +28,7 @@ public class HorizontalRotation implements Rotation {
         }
         ExecutorService eService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         BufferedImage sink = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
-        for (int i = 0; i < img.getHeight(); eService.execute(new HorizontalRotationWorker(i++, img, sink)))
+        for (int i = 0; i < img.getWidth(); eService.execute(new VerticalRotationWorker(i++, img, sink)))
             ;
         eService.shutdown();
         try {
@@ -37,7 +41,8 @@ public class HorizontalRotation implements Rotation {
     }
 
     /**
-     * Reads content of image & calls method defined exactly above
+     * Given path to image file, it'll be read & rotated, where actual vertical
+     * rotation implementation is present in method just above
      */
     @Override
     public BufferedImage rotate(String src) {
