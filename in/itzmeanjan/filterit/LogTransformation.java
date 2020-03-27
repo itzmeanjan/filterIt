@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Given an image ( either color or grayscaled ), we'll trasform each pixel
@@ -45,6 +46,13 @@ public class LogTransformation {
             }
         }
         eService.shutdown();
+        try {
+            // waiting to complete all running workers
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            transformed = null;
+        }
         return transformed;
     }
 

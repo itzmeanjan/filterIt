@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Inverse log transformation just works opposite of Log Transformation, it
@@ -38,6 +39,13 @@ public class InverseLogTransformation extends LogTransformation {
             }
         }
         eService.shutdown();
+        try {
+            // waiting to complete all running workers
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            transformed = null;
+        }
         return transformed;
     }
 

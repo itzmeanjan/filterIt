@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Contrast Stretching is pretty similar to Histogram Equalization, but rather
@@ -70,6 +71,12 @@ public class ContrastStretching {
             }
         }
         eService.shutdown();
+        try {
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            transformed = null;
+        }
         return transformed;
     }
 

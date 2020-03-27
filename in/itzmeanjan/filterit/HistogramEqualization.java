@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Applies histrogram equalization transformation to distribute pixel intensity
@@ -116,6 +117,12 @@ public class HistogramEqualization {
             }
         }
         eService.shutdown();
+        try {
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            transformed = null;
+        }
         return transformed;
     }
 

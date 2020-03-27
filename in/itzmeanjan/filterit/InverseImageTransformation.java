@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Given a buffered image, applies inverse image transformation function on each
@@ -37,7 +38,14 @@ public class InverseImageTransformation {
                 eService.execute(new InverseImageTransformationWorker(i, j, new Color(img.getRGB(j, i)), transformed));
             }
         }
-        eService.shutdown(); // waiting to complete all running workers
+        eService.shutdown();
+        try {
+            // waiting to complete all running workers
+            eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            eService.shutdownNow();
+            transformed = null;
+        }
         return transformed;
     }
 

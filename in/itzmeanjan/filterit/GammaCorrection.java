@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Given an image ( either color or grayscaled ), we'll transform each pixel
@@ -35,6 +36,12 @@ public class GammaCorrection {
                         }
                 }
                 eService.shutdown();
+                try {
+                        eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+                } catch (InterruptedException ie) {
+                        eService.shutdownNow();
+                        transformed = null;
+                }
                 return transformed;
         }
 
