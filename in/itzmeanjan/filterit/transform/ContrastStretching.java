@@ -1,10 +1,13 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import in.itzmeanjan.filterit.GrayScale;
+import in.itzmeanjan.filterit.ImportExportImage;
 
 /**
  * Contrast Stretching is pretty similar to Histogram Equalization, but rather
@@ -55,7 +58,7 @@ public class ContrastStretching {
      * 
      * Concurrency incorporated using java Thread pool.
      */
-    BufferedImage transform(BufferedImage img) {
+    public BufferedImage transform(BufferedImage img) {
         if (img == null) {
             return null;
         }
@@ -85,7 +88,7 @@ public class ContrastStretching {
      * passing BufferedImage, image file name to be passed, which will be read &
      * modified image buffer to be returned ( using previous function )
      */
-    BufferedImage transform(String src) {
+    public BufferedImage transform(String src) {
         return this.transform(ImportExportImage.importImage(src));
     }
 }

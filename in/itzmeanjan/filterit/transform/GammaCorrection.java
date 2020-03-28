@@ -1,10 +1,12 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import in.itzmeanjan.filterit.ImportExportImage;
 
 /**
  * Given an image ( either color or grayscaled ), we'll transform each pixel

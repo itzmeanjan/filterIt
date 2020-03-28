@@ -3,14 +3,14 @@ package in.itzmeanjan.filterit;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-class GrayScale {
+public class GrayScale {
 
     /**
      * Given one already imported image i.e. contructed BufferedImage object, we'll
      * compute grayscaled image in another BufferedImage instance, which is to be
      * returned
      */
-    BufferedImage grayscale(BufferedImage img) {
+    public BufferedImage grayscale(BufferedImage img) {
         if (img == null)
             return null;
         BufferedImage grayscaled = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
@@ -29,7 +29,7 @@ class GrayScale {
      * BufferedImage object, which is to be returned, can be used for further
      * processing
      */
-    BufferedImage grayscale(String src) {
+    public BufferedImage grayscale(String src) {
         return this.grayscale(ImportExportImage.importImage(src));
     }
 }
