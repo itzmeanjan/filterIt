@@ -1,7 +1,7 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
-import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 /**
  * Worker class to be thrown in thread pool, for concurrently modifiing pixels

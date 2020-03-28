@@ -1,4 +1,4 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
 import java.awt.image.BufferedImage;
 import java.awt.Color;

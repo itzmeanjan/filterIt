@@ -1,4 +1,4 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import in.itzmeanjan.filterit.GrayScale;
+import in.itzmeanjan.filterit.ImportExportImage;
 
 /**
  * Applies histrogram equalization transformation to distribute pixel intensity
@@ -101,7 +104,7 @@ public class HistogramEqualization {
      * 
      * Concurrency support incorporated using thread pool.
      */
-    BufferedImage transform(BufferedImage img) {
+    public BufferedImage transform(BufferedImage img) {
         if (img == null)
             return null;
         img = new GrayScale().grayscale(img);
@@ -130,7 +133,7 @@ public class HistogramEqualization {
      * If you want to just pass a path to an image, it'll read it & then return
      * histogram equalized image
      */
-    BufferedImage transform(String src) {
+    public BufferedImage transform(String src) {
         return this.transform(ImportExportImage.importImage(src));
     }
 

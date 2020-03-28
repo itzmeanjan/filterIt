@@ -1,10 +1,12 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import in.itzmeanjan.filterit.ImportExportImage;
 
 /**
  * Given a buffered image, applies inverse image transformation function on each

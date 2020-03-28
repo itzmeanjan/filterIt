@@ -1,7 +1,7 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.transform;
 
-import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 /**
  * Transforms single pixel of buffered image using histogram equalization method
