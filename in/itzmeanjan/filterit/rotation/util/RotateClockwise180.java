@@ -1,14 +1,13 @@
 package in.itzmeanjan.filterit.rotation.util;
 
 import java.awt.image.BufferedImage;
-
 import in.itzmeanjan.filterit.ImportExportImage;
 import in.itzmeanjan.filterit.rotation.HorizontalRotation;
 import in.itzmeanjan.filterit.rotation.Rotation;
 import in.itzmeanjan.filterit.rotation.VerticalRotation;
 
 /**
- * Given a image, we'll rotate it by 180° in clockwise direction, using
+ * Given an image, we'll rotate it by 180° in clockwise direction, using
  * combination of two basic operations
  * 
  * i > First horizontally rotate image matrix ( H )
