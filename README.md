@@ -53,7 +53,7 @@ _Help me in improving it :)_
     - [x] [Vertical Rotation](./docs/verticalRotation.md)
 - Compound Rotation
     - [x] [Clockwise Rotation](./docs/clockwiseRotation.md)
-    - [ ] Anti-Clockwise Rotation
+    - [x] [Anti-Clockwise Rotation](./docs/antiClockwiseRotation.md)
 
 ## usage
 
