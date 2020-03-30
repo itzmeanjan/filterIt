@@ -3,5 +3,8 @@
 # script to be run to compile java source file(s) & make a jar with it;
 # compiled classes to be placed inside ./bin/
 
-find in  -name "*.java" | xargs javac -d bin/
+find . -name "*.java" | xargs javac -d bin/
+
+# this jar can be used as library in any other java project; check documentation
+
 jar cvf in.itzmeanjan.filterit.jar -C bin/ .

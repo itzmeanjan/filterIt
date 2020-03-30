@@ -2,47 +2,59 @@ package in.itzmeanjan.filterit.filter;
 
 import in.itzmeanjan.filterit.ImportExportImage;
 import in.itzmeanjan.filterit.Pixel;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * Given a buffered image, it'll compute mean of pixel intensities for a square matrix ( odd valued
+ * row & column numbers ), centered at P(x, y), for each color components ( i.e. R, G & B ), and
+ * update P(x, y) 's pixel intensity values in sink image.
+ *
+ * <p>Concurrently processes each pixel, present in an image i.e. for a M x N image, we'll process M
+ * x N number of pixels; implementation of thread pool based concurrency allows us to leverage power
+ * of modern multi-core CPUs
+ */
 public class MeanFilter implements Filter {
 
-  // calculates mean of a set of integers,
-  // returns rounded value
-  private int mean(int[][] pxlVal) {
-    int sum = 0;
-    for (int[] i : pxlVal) {
-      for (int j : i) {
-        sum += j;
-      }
-    }
-    return Math.round((float) sum / (float) Math.pow(pxlVal.length, 2));
-  }
-
-  // applies mean filter on given image & updates pixels
-  // of target image
+  /**
+   * Applies mean filter on given buffered image of given order
+   *
+   * <p>order > 0 :: considers subimage of size ( 2*order + 1 ) x ( 2*order + 1 ), around P(x, y)
+   *
+   * <p>order = 0, doesn't update image at all, considers itself only
+   */
   @Override
   public BufferedImage filter(BufferedImage img, int order) {
     if (img == null) {
       return null;
     }
+    ExecutorService eService =
+        Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
     for (int i = 0; i < img.getHeight(); i++) {
-      for (int j = 0; j < img.getWidth(); j++) {
-        Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
-        result.setRGB(
-            j,
-            i,
-            (new Color(
-                    this.mean(pxl.getNeighbouringPixelsFromImage(img, 'r', order)),
-                    this.mean(pxl.getNeighbouringPixelsFromImage(img, 'g', order)),
-                    this.mean(pxl.getNeighbouringPixelsFromImage(img, 'b', order)))
-                .getRGB()));
-      }
+      for (int j = 0;
+          j < img.getWidth();
+          eService.execute(
+              new MeanFilterWorker(
+                  img, result, new Pixel(img.getWidth(), img.getHeight(), i, j++), order))) ;
+    }
+    eService.shutdown();
+    try {
+      // waiting for all of those workers to complete their tasks
+      eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    } catch (InterruptedException ie) {
+      eService.shutdownNow();
+      result = null;
     }
     return result;
   }
 
+  /**
+   * Given a source image filepath & order of mean filter to be applied; it'll first read that image
+   * & then call aforementioned function on buffered image
+   */
   @Override
   public BufferedImage filter(String src, int order) {
     return this.filter(ImportExportImage.importImage(src), order);

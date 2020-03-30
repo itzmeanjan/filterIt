@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 public class Pixel {
-  private int width, height, posX, posY;
+  public int width, height, posX, posY;
 
   public Pixel(int w, int h, int i, int j) {
     this.width = w;

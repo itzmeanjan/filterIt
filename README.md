@@ -33,7 +33,7 @@ _Help me in improving it :)_
 
 - [x] [Gray Scaling](./docs/grayscaling.md)
 
-### Pixel Transformation
+### Pixel Transformation _( Concurrency incorporated )_
 
 - [x] [Inverse Transformation](./docs/inverseTransformation.md)
 - [x] [Gamma Correction](./docs/gammaCorrection.md)
@@ -46,7 +46,7 @@ _Help me in improving it :)_
 
 - [x] [Transposed Image](./docs/transpose.md)
 
-### Rotation
+### Rotation _( Concurrency incorporated )_
 
 - Basic Rotation
     - [x] [Horizontal Rotation](./docs/horizontalRotation.md)
@@ -76,38 +76,57 @@ $ git clone https://github.com/itzmeanjan/filterIt.git
 $ cd filterIt
 ```
 
-- Create a Java source file in this directory
+- You'll see one bash script, named `compile`, execute it
 
 ```bash
+$ ls compile
+$ chmod +x compile # making it executable
+$ ./compile # compiles all java source files & builds *.jar from it
+$ ls in.itzmeanjan.filterit.jar # generated jar; holding compiled classes
+```
+
+- Now you've whole package compiled into a single jar _( not runnable itself )_, which can be put into any directory where you want to use this package
+
+- Let's copy `in.itmeanjan.filterit.jar` to immediate parent directory; then move to parent directory & create a java source file.
+
+```bash
+$ cp in.itzmeanjan.filterit.jar ..
+$ cd ..
 $ touch Main.java
 ```
 
-- Open this file using your favourite text editor & first import `in.itzmeanjan.filterit.*`
+- Open `Main.java` using your favourite text editor & start by importing required classes for applying inverse image transformation on a given image.
 
 ```java
-import in.itzmeanjan.filterit.*;
+import in.itzmeanjan.filterit.ImportExportImage; // for reading & writing images
+import in.itzmeanjan.filterit.transform.InverseImageTransformation; // implementation of inverse image transformation
 ```
 
-- Start defining your class, write a main method, inside which you can now call any implementation which are present in this package
+- Start defining your class; write a main method, inside which we'll apply InverseImageTransformation on an image.
 
 ```java
-import in.itzmeanjan.filterit.*;
+import in.itzmeanjan.filterit.ImportExportImage;
+import in.itzmeanjan.filterit.transform.InverseImageTransformation;
 
 class Main {
     public static void main(String[] args) {
         InverseImageTransformation iTransformation = new InverseImageTransformation();
-        // make sure you're x.jpg present in this directory
+        // make sure you've x.jpg present in this directory
+        // modified image to be stored in y.jpg, in same directory
         System.out.println(ImportExportImage.exportImage(iTransformation.transform("./x.jpg"), "./y.jpg"));
     }
 }
 ```
 
-- Compile & run it
+- Compile & run it, while setting classpath to `in.itzmeanjan.filterit.jar` file
 
 ```bash
-$ javac Main.java
-$ java Main
+$ javac -cp ".:in.itzmeanjan.filterit.jar" Main.java
+$ java -cp ".:in.itzmeanjan.filterit.jar" Main
 ```
+
+- And you've your result in `y.jpg`
+- Check out `javadoc` generated API documentation [here](./javadoc)
 
 ## contribution
 
