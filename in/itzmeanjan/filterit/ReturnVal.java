@@ -5,15 +5,15 @@ package in.itzmeanjan.filterit;
 // status code, 0 - success
 // anything else - failure
 class ReturnVal {
-    int code;
-    String msg;
+  int code;
+  String msg;
 
-    ReturnVal(int c, String m) {
-        code = c;
-        msg = m;
-    }
+  ReturnVal(int c, String m) {
+    code = c;
+    msg = m;
+  }
 
-    public String toString() {
-        return "( " + code + " ) - " + msg;
-    }
+  public String toString() {
+    return "( " + code + " ) - " + msg;
+  }
 }
