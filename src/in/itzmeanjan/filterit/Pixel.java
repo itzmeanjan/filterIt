@@ -3,17 +3,17 @@ package in.itzmeanjan.filterit;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 
-class Pixel {
-    int width, height, posX, posY;
+public class Pixel {
+    private int width, height, posX, posY;
 
-    Pixel(int w, int h, int i, int j) {
+    public Pixel(int w, int h, int i, int j) {
         this.width = w;
         this.height = h;
         this.posX = i;
         this.posY = j;
     }
 
-    Pixel copy() {
+    private Pixel copy() {
         return new Pixel(this.width, this.height, this.posX, this.posY);
     }
 
@@ -41,7 +41,7 @@ class Pixel {
         return 2 * order + 1;
     }
 
-    int[][] getNeighbouringPixelsFromImage(BufferedImage img, char colorComponent, int order) {
+    public int[][] getNeighbouringPixelsFromImage(BufferedImage img, char colorComponent, int order) {
         if (order < 1)
             return null;
         int mask = getMaskSizeFromOrder(order);

@@ -2,8 +2,10 @@ package in.itzmeanjan.filterit;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import in.itzmeanjan.filterit.filter.Filter;
+import in.itzmeanjan.filterit.Pixel;
 
-class LaplacianFilter implements Filter {
+public class LaplacianFilter implements Filter {
 
     private int[][] getMask() {
         return new int[][] { { 0, -1, 0 }, { -1, 4, -1 }, { 0, -1, 0 } };

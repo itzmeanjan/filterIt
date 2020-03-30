@@ -1,12 +1,14 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.filter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import in.itzmeanjan.filterit.ImportExportImage;
+import in.itzmeanjan.filterit.Pixel;
 
 // filters only minimum intensity
 // pixels from neighborhood of a pixel
 // i.e. lets dark pixel grow or pass through filter
-class MinFilter implements Filter {
+public class MinFilter implements Filter {
 
     // computes min intensity pixel value
     // from neighborhood of a certain pixel ( inclusive )

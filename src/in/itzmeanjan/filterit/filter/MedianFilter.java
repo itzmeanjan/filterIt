@@ -1,9 +1,11 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.filter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import in.itzmeanjan.filterit.ImportExportImage;
+import in.itzmeanjan.filterit.Pixel;
 
-class MedianFilter implements Filter {
+public class MedianFilter implements Filter {
 
     // swaps two elements of an array, indicated by their indices
     private void swap(int posI, int posJ, int[] pixels) {

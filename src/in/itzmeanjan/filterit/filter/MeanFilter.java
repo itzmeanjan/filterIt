@@ -1,9 +1,11 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.filter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import in.itzmeanjan.filterit.ImportExportImage;
+import in.itzmeanjan.filterit.Pixel;
 
-class MeanFilter implements Filter {
+public class MeanFilter implements Filter {
 
     // calculates mean of a set of integers,
     // returns rounded value

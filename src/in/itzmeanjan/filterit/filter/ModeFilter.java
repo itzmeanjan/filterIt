@@ -1,13 +1,15 @@
-package in.itzmeanjan.filterit;
+package in.itzmeanjan.filterit.filter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import in.itzmeanjan.filterit.ImportExportImage;
+import in.itzmeanjan.filterit.Pixel;
 
 /**
  * Implementation of mode filter i.e. replaces each pixel intensity value by its
  * neighbouring pixel intensities max value
  */
-class ModeFilter implements Filter {
+public class ModeFilter implements Filter {
 
     /**
      * Computes max amplitude pixel intensity value from neighborhood of a certain
