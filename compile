@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# script to be run to compile java source file(s) & make a jar with it;
+# compiled classes to be placed inside ./bin/
+
+find in  -name "*.java" | xargs javac -d bin/
+jar cvf in.itzmeanjan.filterit.jar -C bin/ .
