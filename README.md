@@ -55,6 +55,10 @@ _Help me in improving it :)_
     - [x] [Clockwise Rotation](./docs/clockwiseRotation.md)
     - [x] [Anti-Clockwise Rotation](./docs/antiClockwiseRotation.md)
 
+## API documentation
+
+Check [here](https://itzmeanjan.github.io/filterIt/javadoc/)
+
 ## usage
 
 - Make sure you've JDK installed on your machine. I've used `openjdk version "1.8.0_232-solus"`; check yours using
@@ -126,7 +130,7 @@ $ java -cp ".:in.itzmeanjan.filterit.jar" Main
 ```
 
 - And you've your result in `y.jpg`
-- Check out `javadoc` generated API documentation [here](./javadoc)
+- Check out `javadoc` generated API documentation [here](https://itzmeanjan.github.io/filterIt/javadoc/)
 
 ## contribution
 
