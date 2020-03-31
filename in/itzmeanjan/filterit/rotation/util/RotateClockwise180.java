@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
  * Given an image, we'll rotate it by 180° in clockwise direction, using combination of two basic
  * operations
  *
- * <p>i > First horizontally rotate image matrix ( H )
+ * <p>i ) First horizontally rotate image matrix ( H )
  *
- * <p>ii > Then vertically rotate image matrix ( V )
+ * <p>ii ) Then vertically rotate image matrix ( V )
  *
  * <p>R = result image = V( H ( Image ) ) = H( V ( Image ) )
  *

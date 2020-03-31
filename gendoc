@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# reads all java source files & generates javadoc for them, 
+# which is to be served at https://itzmeanjan.github.io/filterIt/javadoc
+
+find . -name "*.java" | xargs javadoc -d javadoc/

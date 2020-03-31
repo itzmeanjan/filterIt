@@ -2,86 +2,70 @@ package in.itzmeanjan.filterit.filter;
 
 import in.itzmeanjan.filterit.ImportExportImage;
 import in.itzmeanjan.filterit.Pixel;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * Given a buffered image / path to image file, it'll compute median of pixel intensity values in
+ * neighbourhood around it ( size of neighbourhood depends upon order ( ]>=1 ) supplied while
+ * invoking filter ) for each pixel position. Processing multiple pixels can be done at a time
+ * because concurency support has already been incorporated incorporated.
+ */
 public class MedianFilter implements Filter {
 
-  // swaps two elements of an array, indicated by their indices
-  private void swap(int posI, int posJ, int[] pixels) {
-    int tmp = pixels[posI];
-    pixels[posI] = pixels[posJ];
-    pixels[posJ] = tmp;
-  }
-
-  // sorts a set of integers using bubble sort
-  // cause we'll sorting pretty small number
-  // of elements, so I'm staying with this O(n^2) algo
-  private void sort(int[] pxlVal) {
-    for (int i = 0; i < pxlVal.length; i++) {
-      for (int j = 0; j < pxlVal.length - i - 1; j++) {
-        if (pxlVal[j] > pxlVal[j + 1]) {
-          swap(j, j + 1, pxlVal);
-        }
-      }
-    }
-  }
-
-  private int[] serialize(int[][] pxlVal) {
-    int[] arr = new int[(int) Math.pow(pxlVal.length, 2)];
-    int idx = 0;
-    for (int[] i : pxlVal) for (int j : i) arr[idx++] = j;
-    return arr;
-  }
-
-  // given a set of pixel amplitude values
-  // we'll first sort them ascendically
-  // and find median of those elements
-  //
-  // if we've odd number of elements
-  // it's pretty easy to find out median
-  // but for even number of elements,
-  // we'll consider both size/2 & size/2 - 1,
-  // indexed elements, and take their mean ( rounded )
-  private int median(int[][] pxlVal) {
-    int[] tmp = this.serialize(pxlVal);
-    this.sort(tmp);
-    if (tmp.length % 2 == 0) {
-      return Math.round((float) (tmp[tmp.length / 2] + tmp[tmp.length / 2 - 1]) / (float) 2);
-    }
-    return tmp[tmp.length / 2];
-  }
-
-  // applies median filter on given image & updates pixels
-  // of target image
+  /**
+   * Concurrently applies median filter on a given buffered image & returns updated image
+   *
+   * @param img buffered image instance, on which filter to be applied
+   * @param order > = 1, order of filter to be applied, decides size of mask for convolution
+   * @return modified buffered image, not the supplied one
+   */
   @Override
   public BufferedImage filter(BufferedImage img, int order) {
     if (img == null) {
       return null;
     }
+    ExecutorService eService =
+        Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
     for (int i = 0; i < img.getHeight(); i++) {
-      for (int j = 0; j < img.getWidth(); j++) {
-        Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
-        result.setRGB(
-            j,
-            i,
-            (new Color(
-                    this.median(pxl.getNeighbouringPixelsFromImage(img, 'r', order)),
-                    this.median(pxl.getNeighbouringPixelsFromImage(img, 'g', order)),
-                    this.median(pxl.getNeighbouringPixelsFromImage(img, 'b', order)))
-                .getRGB()));
-      }
+      for (int j = 0;
+          j < img.getWidth();
+          eService.execute(
+              new MedianFilterWorker(
+                  img, result, new Pixel(img.getWidth(), img.getHeight(), i, j++), order))) ;
+    }
+    eService.shutdown();
+    try {
+      // waiting for all of those workers to complete their tasks
+      eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    } catch (InterruptedException ie) {
+      eService.shutdownNow();
+      result = null;
     }
     return result;
   }
 
+  /**
+   * Just another way to talk to median filter, when path to image file is provided, this
+   * implementation to invoked
+   *
+   * @param src path to image file
+   * @param order order of filter to be applied ( >= 1 )
+   * @return modified i.e. filtered image
+   */
   @Override
   public BufferedImage filter(String src, int order) {
     return this.filter(ImportExportImage.importImage(src), order);
   }
 
-  // obtains name of this specific filter
+  /**
+   * Returns name of this filter
+   *
+   * @return name of filter
+   */
   @Override
   public String filterName() {
     return "Median Filter";

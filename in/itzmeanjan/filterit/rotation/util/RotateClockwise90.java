@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
  * Given an image, we'll rotate it by 90° in clockwise direction, using combination of two basic
  * operations
  *
- * <p>i > First transpose image matrix ( T )
+ * <p>i ) First transpose image matrix ( T )
  *
- * <p>ii > Then horizontally rotate image matrix ( H )
+ * <p>ii ) Then horizontally rotate image matrix ( H )
  *
  * <p>R = result image = H( T ( Image ) )
  *

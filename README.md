@@ -136,7 +136,7 @@ $ java -cp ".:in.itzmeanjan.filterit.jar" Main
 
 If you want to help me in improving this package, you're very much welcome. First fork this repo & then clone it into your machine. Now you can start working on it. Finally submit a PR :wink:
 
-What I'm currently interested in is, implementing different pixel operations i.e. +, -, *, /, %, &, |, ! etc. If you can help me in getting those implemented, that'll be great.
+What I'm currently interested in is, implementing different pixel operations i.e. +, -, *, /, %, &, \|, ! etc. If you can help me in getting those implemented, that'll be great.
 
 
 _Thanking you ..._

@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
  * new image, though original image buffer to stay unmodified. We'll perform this rotation as
  * combination two basic operations
  *
- * <p>i > First transpose image matrix
+ * <p>i ) First transpose image matrix
  *
- * <p>ii > Then vertically rotate image matrix
+ * <p>ii ) Then vertically rotate image matrix
  *
  * <p>Now, note that, it's really required to apply aforementioned two transformations in same order
  * as they were defined, otherwise that'll result into rotation by 270° in anti-clockwise direction

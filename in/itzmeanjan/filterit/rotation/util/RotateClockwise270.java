@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
  * Given an image, we'll rotate it by 270° in clockwise direction, using combination of two basic
  * operations
  *
- * <p>i > First horizontally rotate image matrix ( H )
+ * <p>i ) First horizontally rotate image matrix ( H )
  *
- * <p>ii > Then transpose image matrix ( T )
+ * <p>ii ) Then transpose image matrix ( T )
  *
  * <p>R = result image = T( H ( Image ) )
  *
