@@ -55,6 +55,16 @@ _Help me in improving it :)_
     - [x] [Clockwise Rotation](./docs/clockwiseRotation.md)
     - [x] [Anti-Clockwise Rotation](./docs/antiClockwiseRotation.md)
 
+### Arithmetic Operator(s)
+
+- [x] [Addition](./docs/additionOp.md)
+- [ ] Subtraction
+- [ ] Multiplication
+- [ ] Division
+- [ ] Bitwise OR
+- [ ] Bitwise AND
+- [ ] Bitwise XOR
+
 ## API documentation
 
 Check [here](https://itzmeanjan.github.io/filterIt/javadoc/)
