@@ -13,8 +13,8 @@ interface ArithmeticOps {
   boolean isEligible(BufferedImage operandOne, BufferedImage operandTwo);
 
   /** Applies binary operator on each pixel pair from two buffered images */
-  BufferedImage operate(BufferedImage operandOne, BufferedImage operandTwo);
+  BufferedImage operate(BufferedImage operandOne, BufferedImage operandTwo, boolean clip);
 
   /** Applies binary operator on each pixel pair from two images ( filepath given ) */
-  BufferedImage operate(String operandOne, String operandTwo);
+  BufferedImage operate(String operandOne, String operandTwo, boolean clip);
 }

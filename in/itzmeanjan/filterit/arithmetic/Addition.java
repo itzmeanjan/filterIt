@@ -38,7 +38,7 @@ public class Addition implements ArithmeticOps {
    * multicore CPUs
    */
   @Override
-  public BufferedImage operate(BufferedImage operandOne, BufferedImage operandTwo) {
+  public BufferedImage operate(BufferedImage operandOne, BufferedImage operandTwo, boolean clip) {
     if (!this.isEligible(operandOne, operandTwo)) {
       return null;
     }
@@ -49,7 +49,7 @@ public class Addition implements ArithmeticOps {
     for (int i = 0; i < sink.getHeight(); i++)
       eService.execute(
           new AdditionWorker(
-              i, this.extractRow(i, operandOne), this.extractRow(i, operandTwo), sink));
+              i, this.extractRow(i, operandOne), this.extractRow(i, operandTwo), sink, clip));
     eService.shutdown();
     try {
       // waiting for all of those workers to complete their tasks
@@ -65,8 +65,8 @@ public class Addition implements ArithmeticOps {
    * Invokes previous implementation, after reading two operand images into buffered image object
    */
   @Override
-  public BufferedImage operate(String operandOne, String operandTwo) {
+  public BufferedImage operate(String operandOne, String operandTwo, boolean clip) {
     return this.operate(
-        ImportExportImage.importImage(operandOne), ImportExportImage.importImage(operandTwo));
+        ImportExportImage.importImage(operandOne), ImportExportImage.importImage(operandTwo), clip);
   }
 }

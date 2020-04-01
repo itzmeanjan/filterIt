@@ -12,12 +12,14 @@ class AdditionWorker implements Runnable {
   private int row;
   private Color[] colorsOne, colorsTwo;
   private BufferedImage sink;
+  private boolean clip;
 
-  AdditionWorker(int row, Color[] colorsOne, Color[] colorsTwo, BufferedImage sink) {
+  AdditionWorker(int row, Color[] colorsOne, Color[] colorsTwo, BufferedImage sink, boolean clip) {
     this.row = row;
     this.colorsOne = colorsOne;
     this.colorsTwo = colorsTwo;
     this.sink = sink;
+    this.clip = clip;
   }
 
   /**
@@ -40,13 +42,19 @@ class AdditionWorker implements Runnable {
 
   /**
    * Given two pixel intensities from two different images, it'll compute resulting pixel intensity
-   * by adding & scaling them
+   * by adding & scaling them; also clips pixel values or scales them by using modulas operator,
+   * depending upon user supplied argument
    */
   private Color add(Color a, Color b) {
-    return new Color(
-        this.scaleIntensity(a.getRed() + b.getRed()),
-        this.scaleIntensity(a.getGreen() + b.getGreen()),
-        this.scaleIntensity(a.getBlue() + b.getBlue()));
+    return this.clip
+        ? new Color(
+            this.clipIntensity(a.getRed() + b.getRed()),
+            this.clipIntensity(a.getGreen() + b.getGreen()),
+            this.clipIntensity(a.getBlue() + b.getBlue()))
+        : new Color(
+            this.scaleIntensity(a.getRed() + b.getRed()),
+            this.scaleIntensity(a.getGreen() + b.getGreen()),
+            this.scaleIntensity(a.getBlue() + b.getBlue()));
   }
 
   @Override
