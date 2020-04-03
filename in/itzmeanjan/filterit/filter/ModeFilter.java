@@ -2,8 +2,10 @@ package in.itzmeanjan.filterit.filter;
 
 import in.itzmeanjan.filterit.ImportExportImage;
 import in.itzmeanjan.filterit.Pixel;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Implementation of mode filter i.e. replaces each pixel intensity value by its neighbouring pixel
@@ -12,37 +14,33 @@ import java.awt.image.BufferedImage;
 public class ModeFilter implements Filter {
 
   /**
-   * Computes max amplitude pixel intensity value from neighborhood of a certain pixel ( inclusive )
-   */
-  private int mode(int[][] pxlVal) {
-    int max = Integer.MIN_VALUE;
-    for (int[] i : pxlVal) for (int j : i) if (j > max) max = j;
-    return max;
-  }
-
-  /**
-   * Given one image & order value, we'll apply mode filter on each pixel & return modified image
+   * Given an image & order value, it'll concurrently apply mode filter on each pixel ( using
+   * convolution mechanism ) & return modified image, while not affecting original image
    */
   @Override
   public BufferedImage filter(BufferedImage img, int order) {
-    if (img instanceof BufferedImage) {
-      BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
-      for (int i = 0; i < img.getHeight(); i++) {
-        for (int j = 0; j < img.getWidth(); j++) {
-          Pixel pxl = new Pixel(img.getWidth(), img.getHeight(), i, j);
-          result.setRGB(
-              j,
-              i,
-              (new Color(
-                      this.mode(pxl.getNeighbouringPixelsFromImage(img, 'r', order)),
-                      this.mode(pxl.getNeighbouringPixelsFromImage(img, 'g', order)),
-                      this.mode(pxl.getNeighbouringPixelsFromImage(img, 'b', order)))
-                  .getRGB()));
-        }
-      }
-      return result;
+    if (img == null) {
+      return null;
     }
-    return null;
+    ExecutorService eService =
+        Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+    for (int i = 0; i < img.getHeight(); i++) {
+      for (int j = 0;
+          j < img.getWidth();
+          eService.execute(
+              new ModeFilterWorker(
+                  img, result, new Pixel(img.getWidth(), img.getHeight(), i, j++), order))) ;
+    }
+    eService.shutdown();
+    try {
+      // waiting for all of those workers to complete their tasks
+      eService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+    } catch (InterruptedException ie) {
+      eService.shutdownNow();
+      result = null;
+    }
+    return result;
   }
 
   @Override

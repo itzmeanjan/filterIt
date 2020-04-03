@@ -1,8 +1,8 @@
 package in.itzmeanjan.filterit.filter;
 
 import in.itzmeanjan.filterit.Pixel;
-import java.awt.image.BufferedImage;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 /**
  * Given a specific pixel in an image, computes minimum pixel intensity in its neighbourhood; and
