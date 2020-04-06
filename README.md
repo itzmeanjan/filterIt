@@ -58,7 +58,7 @@ _Help me in improving it :)_
 ### Arithmetic Operator(s)
 
 - [x] [Addition](./docs/additionOp.md)
-- [ ] Subtraction
+- [x] [Subtraction](./docs/subtractionOp.md)
 - [ ] Multiplication
 - [ ] Division
 - [ ] Bitwise OR

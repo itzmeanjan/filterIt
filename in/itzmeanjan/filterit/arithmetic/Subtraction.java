@@ -7,15 +7,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Given two images of same dimention it'll apply addition operation on each pixel pair & return
+ * Given two images of same dimention it'll apply subtraction operation on each pixel pair & return
  * modified image
  */
-public class Addition extends ArithmeticOps {
+public class Subtraction extends ArithmeticOps {
 
   /**
-   * Concurrently applies addition operator on two buffered images of same dimension, where each row
-   * gets processed in a different thread, making overall execution faster, leveraging power of
-   * multicore CPUs
+   * Concurrently applies subtraction operator on two buffered images of same dimension, where each
+   * row gets processed in a different thread, making overall execution faster, leveraging power of
+   * multithreaed multicore CPUs
    */
   public BufferedImage operate(BufferedImage operandOne, BufferedImage operandTwo, boolean clip) {
     if (!this.isEligible(operandOne, operandTwo)) {
@@ -27,7 +27,7 @@ public class Addition extends ArithmeticOps {
         new BufferedImage(operandOne.getWidth(), operandOne.getHeight(), operandOne.getType());
     for (int i = 0; i < sink.getHeight(); i++)
       eService.execute(
-          new AdditionWorker(
+          new SubtractionWorker(
               i, this.extractRow(i, operandOne), this.extractRow(i, operandTwo), sink, clip));
     eService.shutdown();
     try {
