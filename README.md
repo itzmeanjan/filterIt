@@ -60,7 +60,7 @@ _Help me in improving it :)_
 - [x] [Addition](./docs/additionOp.md)
 - [x] [Subtraction](./docs/subtractionOp.md)
 - [x] [Multiplication](./docs/multiplicationOp.md)
-- [ ] Division
+- [x] [Division](./docs/divisionOp.md)
 - [ ] Bitwise OR
 - [ ] Bitwise AND
 - [ ] Bitwise XOR
