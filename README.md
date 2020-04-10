@@ -61,7 +61,10 @@ _Help me in improving it :)_
 - [x] [Subtraction](./docs/subtractionOp.md)
 - [x] [Multiplication](./docs/multiplicationOp.md)
 - [x] [Division](./docs/divisionOp.md)
-- [ ] Bitwise OR
+
+### Bitwise Operator(s)
+
+- [x] [Bitwise OR](./docs/bitwiseOROp.md)
 - [ ] Bitwise AND
 - [ ] Bitwise XOR
 
