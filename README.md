@@ -65,7 +65,7 @@ _Help me in improving it :)_
 ### Bitwise Operator(s)
 
 - [x] [Bitwise OR](./docs/bitwiseOROp.md)
-- [ ] Bitwise AND
+- [x] [Bitwise AND](./docs/bitwiseANDOp.md)
 - [ ] Bitwise XOR
 
 ## API documentation
