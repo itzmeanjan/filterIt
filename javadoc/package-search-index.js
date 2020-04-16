@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"in.itzmeanjan.filterit"},{"l":"in.itzmeanjan.filterit.arithmetic"},{"l":"in.itzmeanjan.filterit.bitwise"},{"l":"in.itzmeanjan.filterit.filter"},{"l":"in.itzmeanjan.filterit.rotation"},{"l":"in.itzmeanjan.filterit.rotation.util"},{"l":"in.itzmeanjan.filterit.transform"}]
