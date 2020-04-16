@@ -68,7 +68,7 @@ _Help me in improving it :)_
 - [x] [Bitwise AND](./docs/bitwiseANDOp.md)
 - [x] [Bitwise XOR](./docs/bitwiseXOROp.md)
 - [x] [Bitwise Right Shift](./docs/bitwiseRightShiftOp.md)
-- [ ] Bitwise Left Shift
+- [x] [Bitwise Left Shift](./docs/bitwiseLeftShiftOp.md)
 
 ## API documentation
 
