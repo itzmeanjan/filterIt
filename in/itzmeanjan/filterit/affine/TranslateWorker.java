@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
  * Each row of buffered image is processed concurrently in different
  * thread of execution, each pixel along that row gets translated into new position
  * in sink image using affine transformation mechanism ( here translation ).
- *
+ * <p>
  * Note : If P[i, j] is one such pixel location, translation of (x, y) amount
  * will place P[i, j] in P[i + y, j + x] position in sink image.
  */
@@ -20,11 +20,11 @@ class TranslateWorker implements Runnable {
     /**
      * We'll translate pixels from P[row, i] to P[row, j], in selected row of image
      *
-     * @param sink Buffered image where to store changes
+     * @param sink   Buffered image where to store changes
      * @param colors Pixel intensities along selected row ( in form of color objects )
-     * @param row Row on which we're working on now
-     * @param x amount of translation along X-axis
-     * @param y amount of translation along Y-axis
+     * @param row    Row on which we're working on now
+     * @param x      amount of translation along X-axis
+     * @param y      amount of translation along Y-axis
      */
     TranslateWorker(BufferedImage sink, Color[] colors, int row, int x, int y) {
         this.sink = sink;
@@ -36,7 +36,9 @@ class TranslateWorker implements Runnable {
 
     private void translate(int posX, int posY, Color color) {
         int posXNew = posX + this.x, posYNew = posY + this.y;
-        this.sink.setRGB(posXNew, posYNew, color.getRGB());
+        if ((posXNew >= 0 && posXNew < this.sink.getWidth()) && (posYNew >= 0 && posYNew < this.sink.getHeight())) {
+            this.sink.setRGB(posXNew, posYNew, color.getRGB());
+        }
     }
 
     /**

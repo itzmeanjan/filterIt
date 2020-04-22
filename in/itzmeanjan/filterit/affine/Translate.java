@@ -38,7 +38,7 @@ public class Translate {
      * @param y Amount of translation along Y-axis
      * @return Translated image
      */
-    BufferedImage translate(BufferedImage img, int x, int y) {
+    public BufferedImage translate(BufferedImage img, int x, int y) {
         if (img == null) {
             return null;
         }
@@ -75,7 +75,7 @@ public class Translate {
      * @param y Translation along Y-axis
      * @return Translated image
      */
-    BufferedImage translate(String img, int x, int y) {
+    public BufferedImage translate(String img, int x, int y) {
         return this.translate(ImportExportImage.importImage(img), x, y);
     }
 }
