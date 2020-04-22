@@ -1,5 +1,6 @@
 package in.itzmeanjan.filterit;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -33,5 +34,22 @@ public class ImportExportImage {
   /** Given an image file name, obtains extension of that image i.e. jpg / png */
   public static String imageExtension(String fileName) {
     return fileName.substring(fileName.lastIndexOf(".") + 1);
+  }
+
+  /**
+   * Given a buffered image, we'll modify it by setting each pixel with
+   * provided color, could be helpful in setting background of image & then draw on it.
+   *
+   * @param img Image to be modified
+   * @param color Color value to be set at each pixel location across image I
+   * @return Returns modified image buffer, in place editing performed
+   */
+  public static BufferedImage setCanvas(BufferedImage img, Color color){
+    for(int i = 0; i< img.getHeight(); i++){
+      for(int j = 0; j< img.getWidth(); j++){
+        img.setRGB(j, i, color.getRGB());
+      }
+    }
+    return img;
   }
 }
