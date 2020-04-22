@@ -78,4 +78,25 @@ public class Translate {
     public BufferedImage translate(String img, int x, int y) {
         return this.translate(ImportExportImage.importImage(img), x, y);
     }
+
+    /**
+     * Translates buffered image along X axis, while keeping translation along Y-axis 0
+     *
+     * @param img Buffered image to be translated
+     * @param x translation amount along X-axis
+     * @return Translated image buffer
+     */
+    public BufferedImage translateX(BufferedImage img, int x){
+        return this.translate(img, x, 0);
+    }
+
+    /**
+     * Given path to image file, it'll return X translated image
+     * @param img Path to image file to be translated
+     * @param x Translation along X-axis
+     * @return Translated image buffer
+     */
+    public BufferedImage translateX(String img, int x){
+        return this.translate(img, x, 0);
+    }
 }
