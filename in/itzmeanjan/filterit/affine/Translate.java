@@ -17,6 +17,7 @@ public class Translate {
     /**
      * Given a buffered image, we'll pick all pixel intensities
      * ( along width ) from given row index
+     *
      * @param img From where pixels to be picked up
      * @param row From this row pixels to be picked up
      * @return Selected pixel intensities as Array ( from given row of image )
@@ -34,8 +35,8 @@ public class Translate {
      * into a different sink image i.e. source image doesn't get modified
      *
      * @param img Image to be translated
-     * @param x Amount of translation along X-axis
-     * @param y Amount of translation along Y-axis
+     * @param x   Amount of translation along X-axis
+     * @param y   Amount of translation along Y-axis
      * @return Translated image
      */
     public BufferedImage translate(BufferedImage img, int x, int y) {
@@ -71,8 +72,8 @@ public class Translate {
      * along X-axis & / or Y-axis
      *
      * @param img Path to image file to be translated
-     * @param x Translation along X-axis
-     * @param y Translation along Y-axis
+     * @param x   Translation along X-axis
+     * @param y   Translation along Y-axis
      * @return Translated image
      */
     public BufferedImage translate(String img, int x, int y) {
@@ -83,20 +84,43 @@ public class Translate {
      * Translates buffered image along X axis, while keeping translation along Y-axis 0
      *
      * @param img Buffered image to be translated
-     * @param x translation amount along X-axis
+     * @param x   translation amount along X-axis
      * @return Translated image buffer
      */
-    public BufferedImage translateX(BufferedImage img, int x){
+    public BufferedImage translateX(BufferedImage img, int x) {
         return this.translate(img, x, 0);
     }
 
     /**
      * Given path to image file, it'll return X translated image
+     *
      * @param img Path to image file to be translated
-     * @param x Translation along X-axis
+     * @param x   Translation along X-axis
      * @return Translated image buffer
      */
-    public BufferedImage translateX(String img, int x){
+    public BufferedImage translateX(String img, int x) {
         return this.translate(img, x, 0);
+    }
+
+    /**
+     * Translates buffered image along Y axis, while keeping translation along X-axis 0
+     *
+     * @param img Buffered image to be translated
+     * @param y   translation amount along Y-axis
+     * @return Translated image buffer
+     */
+    public BufferedImage translateY(BufferedImage img, int y) {
+        return this.translate(img, 0, y);
+    }
+
+    /**
+     * Given path to image file, it'll return Y translated image
+     *
+     * @param img Path to image file to be translated
+     * @param y   Translation along Y-axis
+     * @return Translated image buffer
+     */
+    public BufferedImage translateY(String img, int y) {
+        return this.translate(img, 0, y);
     }
 }
