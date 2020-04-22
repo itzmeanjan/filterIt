@@ -6,24 +6,28 @@
 
 ![banner_2](examples/banner_2.jpg)
 
-**Not anymore just an image filtering implementation, rather I planned to extend it to also include pixel transformation & image rotation implementations _( where each of which is written from scratch )_**
+**Not anymore just an image filtering implementation, rather I planned to extend it to also include various image processing implementations _( each of them to be written from scratch / already written )_**
 
 ![banner_3](examples/banner_3.png)
 
-**What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:
+~~**What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:~~
+
+All image processing implementations have concurrency support in-built. :heavy_check_mark:
+
+Currently working on **Affine Transformation Functions i.e. Translation, Rotation & Scaling**.
 
 _Help me in improving it :)_
 
 ## implementation(s)
 
-### Spatial Filters
+### Spatial Filters _( Concurrency incorporated )_
 
 - [x] [Mean Filter](./docs/meanFilter.md)
 - [x] [Median Filter](./docs/medianFilter.md)
 - [x] [Mode Filter](./docs/modeFilter.md)
 - [x] [Min Filter](./docs/minFilter.md)
 
-### Edge Detection Filters
+### Edge Detection Filters _( Concurrency incorporated )_
 
 - [x] [Sobel Filter](./docs/sobelFilter.md)
 - [x] [Prewitt Filter](./docs/prewittFilter.md)
@@ -55,20 +59,26 @@ _Help me in improving it :)_
     - [x] [Clockwise Rotation](./docs/clockwiseRotation.md)
     - [x] [Anti-Clockwise Rotation](./docs/antiClockwiseRotation.md)
 
-### Arithmetic Operator(s)
+### Arithmetic Operator(s) _( Concurrency incorporated )_
 
 - [x] [Addition](./docs/additionOp.md)
 - [x] [Subtraction](./docs/subtractionOp.md)
 - [x] [Multiplication](./docs/multiplicationOp.md)
 - [x] [Division](./docs/divisionOp.md)
 
-### Bitwise Operator(s)
+### Bitwise Operator(s) _( Concurrency incorporated )_
 
 - [x] [Bitwise OR](./docs/bitwiseOROp.md)
 - [x] [Bitwise AND](./docs/bitwiseANDOp.md)
 - [x] [Bitwise XOR](./docs/bitwiseXOROp.md)
 - [x] [Bitwise Right Shift](./docs/bitwiseRightShiftOp.md)
 - [x] [Bitwise Left Shift](./docs/bitwiseLeftShiftOp.md)
+
+### Affine Transformation _( Concurrency incorporated )_
+
+- [x] [Translation](./docs/translation.md)
+- [ ] Rotation
+- [ ] Scaling
 
 ## API documentation
 
@@ -151,7 +161,7 @@ $ java -cp ".:in.itzmeanjan.filterit.jar" Main
 
 If you want to help me in improving this package, you're very much welcome. First fork this repo & then clone it into your machine. Now you can start working on it. Finally submit a PR :wink:
 
-What I'm currently interested in is, implementing different pixel operations i.e. +, -, *, /, %, &, \|, ! etc. If you can help me in getting those implemented, that'll be great.
+What I'm currently interested in is, implementing affine transformation operations. If you can help me in getting those implemented, that'll be great.
 
 
 _Thanking you ..._
