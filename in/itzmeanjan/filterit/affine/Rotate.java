@@ -47,6 +47,7 @@ public class Rotate {
         }
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         BufferedImage sink = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        sink = ImportExportImage.setCanvas(sink, new Color(0, 0, 0));
         for (int i = 0; i < img.getHeight(); i++) {
             executorService.execute(
                     new RotateWorker(sink, i, theta, this.pickRow(i, img))
