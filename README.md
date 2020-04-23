@@ -77,7 +77,7 @@ _Help me in improving it :)_
 ### Affine Transformation _( Concurrency incorporated )_
 
 - [x] [Translation](./docs/translation.md)
-- [ ] Rotation
+- [x] [Rotation](./docs/rotation.md)
 - [ ] Scaling
 
 ## API documentation
