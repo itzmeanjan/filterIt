@@ -81,4 +81,48 @@ public class Scale {
     public BufferedImage scale(String img, double x, double y) {
         return this.scale(ImportExportImage.importImage(img), x, y);
     }
+
+    /**
+     * Scales buffered image along X by given scale factor
+     *
+     * @param img Buffered image to be scaled
+     * @param x   Scale factor along X
+     * @return Scaled buffered image
+     */
+    public BufferedImage scaleX(BufferedImage img, double x) {
+        return this.scale(img, x, 1.0);
+    }
+
+    /**
+     * Scales buffered image along X by given scale factor
+     *
+     * @param img Image to be scaled
+     * @param x   Scale factor along X
+     * @return Scaled image
+     */
+    public BufferedImage scaleX(String img, double x) {
+        return this.scaleX(ImportExportImage.importImage(img), x);
+    }
+
+    /**
+     * Scales buffered image along Y by given scale factor
+     *
+     * @param img Image to be scaled
+     * @param y   Scale factor along Y
+     * @return Scaled image
+     */
+    public BufferedImage scaleY(BufferedImage img, double y) {
+        return this.scale(img, 1.0, y);
+    }
+
+    /**
+     * Scales buffered image along Y by given scale factor
+     *
+     * @param img Image to be scaled
+     * @param y   Scale factor along Y
+     * @return Scaled image
+     */
+    public BufferedImage scaleY(String img, double y) {
+        return this.scaleY(ImportExportImage.importImage(img), y);
+    }
 }
