@@ -47,13 +47,13 @@ public class Main {
 
 - Compile it using following bash command
 
-```shell script
+```bash
 $ javac -cp ".:in.itzmeanjan.filterit.jar" Main.java
 ```
 
 - Run it using bash snippet below
 
-```shell script
+```bash
 $ java -cp ".:in.itzmeanjan.filterit.jar" Main
 ```
 
