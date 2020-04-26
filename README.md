@@ -78,7 +78,7 @@ _Help me in improving it :)_
 
 - [x] [Translation](./docs/translation.md)
 - [x] [Rotation](./docs/rotation.md)
-- [ ] Scaling
+- [x] [Scaling](./docs/scale.md)
 
 ## API documentation
 
