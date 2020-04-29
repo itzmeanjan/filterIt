@@ -7,12 +7,22 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
+/**
+ * Given a buffered image with bimodal histogram, we'll segment that image
+ * into foreground and background using automatic thresholding mechanism.
+ * <p>
+ * This one implements Otsu's Algorithm.
+ */
 public class AutomaticThresholding {
 
+    /**
+     * Finds frequency distribution of each of intensity
+     * level ∈ [0, 255] for given 8-bit grayscale image
+     *
+     * @param img Buffered image to be segmented
+     * @return
+     */
     private HashMap<Integer, Integer> getFrequencyDistribution(BufferedImage img) {
-        if (img == null) {
-            return null;
-        }
         HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
         for (int i = 0; i < img.getHeight(); i++) {
             for (int j = 0; j < img.getWidth(); j++) {
@@ -27,6 +37,13 @@ public class AutomaticThresholding {
         return hashMap;
     }
 
+    /**
+     * Computes probability of each pixel intensity level ( 256 levels for 8-bit image )
+     *
+     * @param hashMap Frequency distribution of pixel intensity values
+     * @param pixelC  Total pixel count in image
+     * @return
+     */
     private double[] getProbabilities(HashMap<Integer, Integer> hashMap, int pixelC) {
         double[] probabilities = new double[256];
         for (int i = 0; i < 256; i++) {
@@ -35,22 +52,57 @@ public class AutomaticThresholding {
         return probabilities;
     }
 
+    /**
+     * Sum of probabilities for all intensity levels where intensity value < threshold
+     *
+     * @param probabilities Probabilities of pixel intensity values
+     * @param threshold     Selected threshold ∈ [0, 255]
+     * @return
+     */
     private double probabilityOfClassOne(double[] probabilities, int threshold) {
         double classOneProb = 0.0;
         for (int i = 0; i < threshold; classOneProb += probabilities[i++]) ;
         return classOneProb;
     }
 
+    /**
+     * >= threshold, class's probability, which is nothing but 1 - probabilityOfClassOne
+     *
+     * @param classOneProb Probability of all pixels belonging to < threshold, class
+     * @return
+     */
     private double probabilityOfClassTwo(double classOneProb) {
         return 1.0 - classOneProb;
     }
 
+    /**
+     * Calculates mean of pixel intensities for class One ( intensity values < threshold ),
+     * using this formula
+     * <p>
+     * Σ P(i) / classOneProbability, for  i = 0 .. (threshold - 1)
+     *
+     * @param probabilities Probabilities of pixel intensity values
+     * @param threshold     Selected threshold ∈ [0, 255]
+     * @param classOneProb  Sum of Probabilities of all pixel intensities < threshold
+     * @return
+     */
     private double meanOfClassOne(double[] probabilities, int threshold, double classOneProb) {
         double classOneMean = 0.0;
         for (int i = 0; i < threshold; classOneMean += i * probabilities[i++]) ;
         return classOneMean / classOneProb;
     }
 
+    /**
+     * Calculates mean of pixel intensities for class Two ( intensity values >= threshold ),
+     * using this formula
+     * <p>
+     * Σ P(i) / classTwoProbability, for  i = threshold .. 255
+     *
+     * @param probabilities Probabilities of pixel intensity values
+     * @param threshold     Selected threshold ∈ [0, 255]
+     * @param classTwoProb  Sum of Probabilities of all pixel intensities >= threshold
+     * @return
+     */
     private double meanOfClassTwo(double[] probabilities, int threshold, double classTwoProb) {
         double classTwoMean = 0.0;
         for (int i = threshold; i < 256; classTwoMean += i * probabilities[i++]) ;
