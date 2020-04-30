@@ -1,20 +1,12 @@
 # filterIt
 
-![banner](examples/banner.jpg)
+**Image processing algorithms implemented from scratch in Java, with in-built concurrency support** :heavy_check_mark:
 
-~~Another Order **n** _( >= 1 )_ Image Filtering implementation in Java.~~ **Show some** :heart:
+Banner_1 | Banner_2
+--- | ---
+![banner](examples/banner.jpg) | ![banner_2](examples/banner_2.jpg)
 
-![banner_2](examples/banner_2.jpg)
-
-**Not anymore just an image filtering implementation, rather I planned to extend it to also include various image processing implementations _( each of them to be written from scratch / already written )_**
-
-![banner_3](examples/banner_3.png)
-
-~~**What's more interesting is, I'm converting all implementations into concurrent one, so that it can leverage power of modern multi-core machines** :wink:~~
-
-All image processing implementations have concurrency support in-built. :heavy_check_mark:
-
-Currently working on **Affine Transformation Functions i.e. Translation, Rotation & Scaling**.
+Currently working on **Image Segmentation Ops**.
 
 _Help me in improving it :)_
 
@@ -79,6 +71,11 @@ _Help me in improving it :)_
 - [x] [Translation](./docs/translation.md)
 - [x] [Rotation](./docs/rotation.md)
 - [x] [Scaling](./docs/scale.md)
+
+### Segmentation
+
+- [ ] Automatic Thresholding
+- [ ] Region Growing
 
 ## API documentation
 
