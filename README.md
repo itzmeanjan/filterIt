@@ -21,7 +21,7 @@ _Usage example can be found [here](./docs/example.md)._
 
 ## implementation(s)
 
-These list denotes already implemented algorithms, present in `filterIt`.
+Following list denotes algorithms implemented in `filterIt`.
 
 ### Spatial Filters _( Concurrency incorporated )_
 
@@ -85,7 +85,7 @@ These list denotes already implemented algorithms, present in `filterIt`.
 
 ### Segmentation
 
-- [ ] Automatic Thresholding
+- [x] [Automatic Thresholding](./docs/automaticThresholding.md)
 - [ ] Region Growing
 
 ## API documentation
