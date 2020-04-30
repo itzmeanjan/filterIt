@@ -20,7 +20,7 @@ public class AutomaticThresholding {
      * level ∈ [0, 255] for given 8-bit grayscale image
      *
      * @param img Buffered image to be segmented
-     * @return
+     * @return Frequency distribution of each of possible pixel intensity level
      */
     private HashMap<Integer, Integer> getFrequencyDistribution(BufferedImage img) {
         HashMap<Integer, Integer> hashMap = new HashMap<Integer, Integer>();
@@ -42,7 +42,7 @@ public class AutomaticThresholding {
      *
      * @param hashMap Frequency distribution of pixel intensity values
      * @param pixelC  Total pixel count in image
-     * @return
+     * @return Probabilities of pixel intensity levels, where P[i] denotes probability of Pixel intensity value `i`, kept in `i` index of array.
      */
     private double[] getProbabilities(HashMap<Integer, Integer> hashMap, int pixelC) {
         double[] probabilities = new double[256];
@@ -53,11 +53,11 @@ public class AutomaticThresholding {
     }
 
     /**
-     * Sum of probabilities for all intensity levels where intensity value < threshold
+     * Finds sum of probabilities for all intensity levels where intensity < threshold
      *
      * @param probabilities Probabilities of pixel intensity values
      * @param threshold     Selected threshold ∈ [0, 255]
-     * @return
+     * @return Sum of probabilities of all intensity levels < threshold
      */
     private double probabilityOfClassOne(double[] probabilities, int threshold) {
         double classOneProb = 0.0;
@@ -67,9 +67,11 @@ public class AutomaticThresholding {
 
     /**
      * >= threshold, class's probability, which is nothing but 1 - probabilityOfClassOne
+     * <p>
+     * probabilityOfClassOne + probabilityOfClassTwo = 1
      *
      * @param classOneProb Probability of all pixels belonging to < threshold, class
-     * @return
+     * @return Sum of probabilities of all intensity levels >= threshold
      */
     private double probabilityOfClassTwo(double classOneProb) {
         return 1.0 - classOneProb;
@@ -84,7 +86,7 @@ public class AutomaticThresholding {
      * @param probabilities Probabilities of pixel intensity values
      * @param threshold     Selected threshold ∈ [0, 255]
      * @param classOneProb  Sum of Probabilities of all pixel intensities < threshold
-     * @return
+     * @return Mean of class one pixels
      */
     private double meanOfClassOne(double[] probabilities, int threshold, double classOneProb) {
         double classOneMean = 0.0;
@@ -101,7 +103,7 @@ public class AutomaticThresholding {
      * @param probabilities Probabilities of pixel intensity values
      * @param threshold     Selected threshold ∈ [0, 255]
      * @param classTwoProb  Sum of Probabilities of all pixel intensities >= threshold
-     * @return
+     * @return Mean of class two pixels
      */
     private double meanOfClassTwo(double[] probabilities, int threshold, double classTwoProb) {
         double classTwoMean = 0.0;
@@ -109,6 +111,15 @@ public class AutomaticThresholding {
         return classTwoMean / classTwoProb;
     }
 
+    /**
+     * Computes inter class variance, using following formula
+     * <p>
+     * classOneProbability * classTwoProbability * ( classOneMean - classTwoMean ) ^ 2
+     *
+     * @param probabilities Probabilities of pixel intensity levels
+     * @param threshold     Selected threshold value ∈ [0, 255]
+     * @return Inter class variance
+     */
     private double interClassVariance(double[] probabilities, int threshold) {
         double classOneProb = this.probabilityOfClassOne(probabilities, threshold);
         double classTwoProb = this.probabilityOfClassTwo(classOneProb);
@@ -117,6 +128,15 @@ public class AutomaticThresholding {
         return classOneProb * classTwoProb * Math.pow(classOneMean - classTwoMean, 2.0);
     }
 
+    /**
+     * Tries to find out suitable threshold value so that image can be segmented into
+     * background and foreground
+     * <p>
+     * Works well with images having bimodal histogram
+     *
+     * @param probabilities Probabilities of pixel intensity levels
+     * @return Threshold value found after automatic detection
+     */
     private int computeThresholdValue(double[] probabilities) {
         double[] interClassVariance = new double[256];
         for (int i = 0; i < interClassVariance.length; i++) {
@@ -133,6 +153,12 @@ public class AutomaticThresholding {
         return thresholdIndex;
     }
 
+    /**
+     * Performs automatic thresholding based image segmentation op, using Otsu's Algorithm
+     *
+     * @param img Image to be segmented
+     * @return Segmented image
+     */
     public BufferedImage segment(BufferedImage img) {
         if (img == null) {
             return null;
@@ -155,6 +181,12 @@ public class AutomaticThresholding {
         return sink;
     }
 
+    /**
+     * Performs automatic thresholding based image segmentation op, using Otsu's Algorithm
+     *
+     * @param img Image to be segmented
+     * @return Segmented image
+     */
     public BufferedImage segment(String img) {
         return this.segment(ImportExportImage.importImage(img));
     }
