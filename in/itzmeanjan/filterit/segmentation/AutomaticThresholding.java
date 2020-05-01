@@ -50,7 +50,11 @@ public class AutomaticThresholding {
     private double[] getProbabilities(HashMap<Integer, Integer> hashMap, int pixelC) {
         double[] probabilities = new double[256];
         for (int i = 0; i < 256; i++) {
-            probabilities[i] = ((double) hashMap.get(i)) / pixelC;
+            if (hashMap.containsKey(i)) {
+                probabilities[i] = ((double) hashMap.get(i)) / pixelC;
+            } else {
+                probabilities[i] = 0.0;
+            }
         }
         return probabilities;
     }
