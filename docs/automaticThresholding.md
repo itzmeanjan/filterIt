@@ -62,5 +62,6 @@ $  java -cp ".:in.itzmeanjan.filterit.jar" Main
 Original Image | Segmented Image
 --- | ---
 ![weaver](../examples/weaver.jpg) | ![segmentedUsingAutomaticThresholding](../examples/segmentedUsingAutomaticThresholding.jpg)
+![abstract_3](../examples/abstract_3.jpg) | ![segmentedUsingAutomaticThresholding](../examples/segmentedUsingAutomaticThresholding_2.jpg)
 
 Thanking you :)
