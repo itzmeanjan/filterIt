@@ -11,4 +11,10 @@ find . -name "*.java" | xargs javac -d bin/
 
 # this jar can be used as library in any other java project; check documentation
 
-jar cvf in.itzmeanjan.filterit.jar -C bin/ .
+
+if [ ! -d "./release/" ]; then
+	mkdir release
+fi
+
+jar cvf ./release/in.itzmeanjan.filterit.jar -C bin/ .
+rm ./bin -r
