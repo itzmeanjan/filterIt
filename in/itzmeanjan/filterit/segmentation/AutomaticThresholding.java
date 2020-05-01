@@ -6,6 +6,9 @@ import in.itzmeanjan.filterit.ImportExportImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Given a buffered image with bimodal histogram, we'll segment that image
@@ -53,82 +56,6 @@ public class AutomaticThresholding {
     }
 
     /**
-     * Finds sum of probabilities for all intensity levels where intensity < threshold
-     *
-     * @param probabilities Probabilities of pixel intensity values
-     * @param threshold     Selected threshold ∈ [0, 255]
-     * @return Sum of probabilities of all intensity levels < threshold
-     */
-    private double probabilityOfClassOne(double[] probabilities, int threshold) {
-        double classOneProb = 0.0;
-        for (int i = 0; i < threshold; classOneProb += probabilities[i++]) ;
-        return classOneProb;
-    }
-
-    /**
-     * >= threshold, class's probability, which is nothing but 1 - probabilityOfClassOne
-     * <p>
-     * probabilityOfClassOne + probabilityOfClassTwo = 1
-     *
-     * @param classOneProb Probability of all pixels belonging to < threshold, class
-     * @return Sum of probabilities of all intensity levels >= threshold
-     */
-    private double probabilityOfClassTwo(double classOneProb) {
-        return 1.0 - classOneProb;
-    }
-
-    /**
-     * Calculates mean of pixel intensities for class One ( intensity values < threshold ),
-     * using this formula
-     * <p>
-     * Σ P(i) / classOneProbability, for  i = 0 .. (threshold - 1)
-     *
-     * @param probabilities Probabilities of pixel intensity values
-     * @param threshold     Selected threshold ∈ [0, 255]
-     * @param classOneProb  Sum of Probabilities of all pixel intensities < threshold
-     * @return Mean of class one pixels
-     */
-    private double meanOfClassOne(double[] probabilities, int threshold, double classOneProb) {
-        double classOneMean = 0.0;
-        for (int i = 0; i < threshold; classOneMean += i * probabilities[i++]) ;
-        return classOneMean / classOneProb;
-    }
-
-    /**
-     * Calculates mean of pixel intensities for class Two ( intensity values >= threshold ),
-     * using this formula
-     * <p>
-     * Σ P(i) / classTwoProbability, for  i = threshold .. 255
-     *
-     * @param probabilities Probabilities of pixel intensity values
-     * @param threshold     Selected threshold ∈ [0, 255]
-     * @param classTwoProb  Sum of Probabilities of all pixel intensities >= threshold
-     * @return Mean of class two pixels
-     */
-    private double meanOfClassTwo(double[] probabilities, int threshold, double classTwoProb) {
-        double classTwoMean = 0.0;
-        for (int i = threshold; i < 256; classTwoMean += i * probabilities[i++]) ;
-        return classTwoMean / classTwoProb;
-    }
-
-    /**
-     * Computes inter class variance, using following formula
-     * <p>
-     * classOneProbability * classTwoProbability * ( classOneMean - classTwoMean ) ^ 2
-     *
-     * @param probabilities Probabilities of pixel intensity levels
-     * @param threshold     Selected threshold value ∈ [0, 255]
-     * @return Inter class variance
-     */
-    private double interClassVariance(double[] probabilities, int threshold) {
-        double classOneProb = this.probabilityOfClassOne(probabilities, threshold);
-        double classTwoProb = this.probabilityOfClassTwo(classOneProb);
-        double classOneMean = this.meanOfClassOne(probabilities, threshold, classOneProb),
-                classTwoMean = this.meanOfClassTwo(probabilities, threshold, classTwoProb);
-        return classOneProb * classTwoProb * Math.pow(classOneMean - classTwoMean, 2.0);
-    }
-
-    /**
      * Tries to find out suitable threshold value so that image can be segmented into
      * background and foreground
      * <p>
@@ -139,8 +66,18 @@ public class AutomaticThresholding {
      */
     private int computeThresholdValue(double[] probabilities) {
         double[] interClassVariance = new double[256];
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         for (int i = 0; i < interClassVariance.length; i++) {
-            interClassVariance[i] = this.interClassVariance(probabilities, i);
+            executorService.execute(
+                    new AutomaticThresholdingWorker(probabilities, i, interClassVariance)
+            );
+        }
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ie) {
+            executorService.shutdownNow();
+            return -1;
         }
         int thresholdIndex = -1;
         double thresholdV = Double.MIN_VALUE;
