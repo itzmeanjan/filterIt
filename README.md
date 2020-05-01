@@ -6,7 +6,7 @@ Banner_1 | Banner_2
 --- | ---
 ![banner](examples/banner.jpg) | ![banner_2](examples/banner_2.jpg)
 
-Currently working on **Image Segmentation Ops**.
+Currently, working on **Image Segmentation Ops**.
 
 _Help me in improving it :)_
 
@@ -18,6 +18,10 @@ with built-in concurrency support _( using Java thread pool )_. Consider using i
 Check API documentation, _made with javadoc_, [here](./README.md/#api-documentation).
 
 _Usage example can be found [here](./docs/example.md)._
+
+## download
+
+Get precompiled jar [here](./release/in.itzmeanjan.filterit.jar).
 
 ## implementation(s)
 
@@ -97,7 +101,7 @@ Check [here](https://itzmeanjan.github.io/filterIt/javadoc/)
 If you want to help me in improving this package, you're very much welcome. 
 First fork this repo & then clone it into your machine. 
 Now you can start working on it by creating a new branch. 
-Finally submit a PR :wink:
+Finally, submit a PR :wink:
 
 What I'm currently interested in is, implementing **image segmentation** ops. 
 You might consider helping me there.
