@@ -50,8 +50,8 @@ class Image {
                 if (i == 1 && j == 1) {
                     continue; // skipping this pixel itself
                 }
-                if (this.isPositionValid(position.getX() + i - 1, position.getY() + j - 1)) {
-                    n8.add(this.getPosition(position.getX() + i - 1, position.getY() + j - 1));
+                if (this.isPositionValid(position.getX() + j - 1, position.getY() + i - 1)) {
+                    n8.add(this.getPosition(position.getX() + j - 1, position.getY() + i - 1));
                 }
             }
         }
@@ -67,10 +67,6 @@ class Image {
 
     public void setActive(int x, int y) {
         this.getPosition(x, y).setState(1);
-    }
-
-    public void setExplored(int x, int y) {
-        this.getPosition(x, y).setState(2);
     }
 
     public Position[][] getPositions() {

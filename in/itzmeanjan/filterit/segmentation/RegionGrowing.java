@@ -24,17 +24,22 @@ public class RegionGrowing {
         }
         Image image = Image.fromBufferedImage(new GrayScale().grayscale(img));
 
+        int targetIntensity = image.getPosition(x, y).getIntensity();
         BufferedImage sink = new BufferedImage(width, height, img.getType());
-        sink = ImportExportImage.setCanvas(sink, new Color(255, 255, 255));
+        sink = ImportExportImage.setCanvas(sink, new Color(0, 0, 0));
 
         image.setActive(x, y);
         ArrayList<Position> buffer = new ArrayList<Position>();
         buffer.add(image.getPosition(x, y));
         while (!buffer.isEmpty()) {
             Position position = buffer.remove(0);
-            position.setState(1);
             buffer.addAll(image.getUnexploredN8(position));
-            position.setState(2);
+            buffer.forEach(pos -> {
+                pos.setState(1);
+            });
+            if (position.isIntensityWithInRange(targetIntensity, relaxation)) {
+                position.setState(2);
+            }
         }
 
         for (Position[] positions : image.getPositions()) {

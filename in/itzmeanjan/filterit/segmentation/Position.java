@@ -31,6 +31,10 @@ class Position {
         this.state = state;
     }
 
+    public boolean isIntensityWithInRange(int targetIntensity, int relaxation) {
+        return this.intensity >= targetIntensity - relaxation && this.intensity <= targetIntensity + relaxation;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
