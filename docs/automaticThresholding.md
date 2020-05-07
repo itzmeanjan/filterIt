@@ -5,11 +5,11 @@
 Here we're going to segment one image 
 _( with a bimodal histogram )_, using **Otsu's Algorithm**, which
 tries to maximize inter class variance, by minimizing intra class
-variance. Finally we obtain suitable intensity value 
+variance. Finally, we obtain suitable intensity value 
 _( to be used as threshold )_, for that intensity value which is having highest
 inter class variance.
 
-Pixel intensity classes are defined by selecting a threshold ∈ [0, 255]
+Pixel intensity classes defined by selecting a threshold ∈ [0, 255]
 
 - Intensity < threshold :> class one
 - Intensity >= threshold :> class two
