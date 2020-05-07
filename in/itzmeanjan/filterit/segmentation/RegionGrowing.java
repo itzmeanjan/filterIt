@@ -7,20 +7,38 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Given a buffered image ( grayscale, if not gray scaled yet,
+ * to be done inside this implementation ), it'll compute
+ * segmented image using a seed pixel location, applying
+ * region growing algorithm
+ * <p>
+ * This implementation doesn't have in-built concurrency support yet
+ */
 public class RegionGrowing {
 
+    /**
+     * Checks whether this pixel location is inside image matrix or not
+     *
+     * @param width  Width of image
+     * @param height height of image
+     * @param x      X-coordinate of image
+     * @param y      Y-coordinate of image
+     * @return whether pixel lies with in image matrix or not
+     */
     private boolean isPixelValid(int width, int height, int x, int y) {
         return (y >= 0 && y < height)
                 && (x >= 0 && x < width);
     }
 
     /**
-     * Computes segmented image following this rule,
+     * Computes segmented image following this rule, while
+     * considering specified pixel location as seed pixel
      * <p>
      * all pixel locations having intensity within [intensity - relaxation, intensity + relaxation]
-     * to be kept & remaining to be made black ( black used as background color )
+     * to be kept ( as they are ) & remaining to be made black ( black used as background color )
      * <p>
-     * For segmenting N objects requires N-run
+     * ! For segmenting N objects requires N-run, which is not really a good thing !
      *
      * @param img        Image to be segmented
      * @param x          X-coordinate of Pixel, from which segmentation to be started
@@ -40,11 +58,11 @@ public class RegionGrowing {
 
         int targetIntensity = image.getPosition(x, y).getIntensity();
         BufferedImage sink = new BufferedImage(width, height, img.getType());
-        sink = ImportExportImage.setCanvas(sink, new Color(0, 0, 0));
+        sink = ImportExportImage.setCanvas(sink, new Color(0, 0, 0)); // setting sink image background to black
 
-        image.setActive(x, y);
-        ArrayList<Position> buffer = new ArrayList<Position>();
-        buffer.add(image.getPosition(x, y));
+        image.setActive(x, y); // this is our seed pixel
+        ArrayList<Position> buffer = new ArrayList<Position>(); // active pixels currently, having state 1
+        buffer.add(image.getPosition(x, y)); // seed pixel is first pixel which is set active
         while (!buffer.isEmpty()) {
             Position position = buffer.remove(0);
             buffer.addAll(image.getUnexploredN8(position));
@@ -72,7 +90,9 @@ public class RegionGrowing {
     }
 
     /**
-     * Segments image starting from specified pixel location, considering intensity of init location
+     * Segments image while considering specified pixel location as seed pixel
+     * <p>
+     * Selection of seed pixel is very important for good segmentation result
      *
      * @param img        Image to be segmented
      * @param x          X-coordinate of Pixel, from which segmentation to be started

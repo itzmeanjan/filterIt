@@ -87,6 +87,13 @@ class Image {
         this.positions[y][x] = position;
     }
 
+    /**
+     * Checks whether this pixel location lies within image or not
+     *
+     * @param x Pixel location X-coordinate
+     * @param y Pixel location Y-coordinate
+     * @return Whether this pixel lies within image or not
+     */
     private boolean isPositionValid(int x, int y) {
         return (y >= 0 && y < height)
                 && (x >= 0 && x < width);
@@ -139,7 +146,7 @@ class Image {
     }
 
     /**
-     * Returns a matrix of all pixels present in image
+     * Returns a matrix of all pixels present in image, in ordered fashion
      *
      * @return All pixels present in image
      */
