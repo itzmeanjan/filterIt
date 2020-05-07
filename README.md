@@ -90,7 +90,7 @@ Following list denotes algorithms implemented in `filterIt`.
 ### Segmentation
 
 - [x] [Automatic Thresholding](./docs/automaticThresholding.md)
-- [ ] Region Growing
+- [x] [Region Growing](./docs/regionGrowing.md)
 
 ## API documentation
 
