@@ -14,6 +14,20 @@ public class RegionGrowing {
                 && (x >= 0 && x < width);
     }
 
+    /**
+     * Computes segmented image following this rule,
+     * <p>
+     * all pixel locations having intensity within [intensity - relaxation, intensity + relaxation]
+     * to be kept & remaining to be made black ( black used as background color )
+     * <p>
+     * For segmenting N objects requires N-run
+     *
+     * @param img        Image to be segmented
+     * @param x          X-coordinate of Pixel, from which segmentation to be started
+     * @param y          Y-coordinate of Pixel, from which segmentation to be started
+     * @param relaxation relaxation around initial pixel's intensity value
+     * @return Segmented image
+     */
     public BufferedImage segment(BufferedImage img, int x, int y, int relaxation) {
         if (img == null) {
             return null;
@@ -57,6 +71,15 @@ public class RegionGrowing {
         return sink;
     }
 
+    /**
+     * Segments image starting from specified pixel location, considering intensity of init location
+     *
+     * @param img        Image to be segmented
+     * @param x          X-coordinate of Pixel, from which segmentation to be started
+     * @param y          Y-coordinate of Pixel, from which segmentation to be started
+     * @param relaxation relaxation around initial pixel's intensity value
+     * @return Segmented image
+     */
     public BufferedImage segment(String img, int x, int y, int relaxation) {
         return this.segment(ImportExportImage.importImage(img), x, y, relaxation);
     }
