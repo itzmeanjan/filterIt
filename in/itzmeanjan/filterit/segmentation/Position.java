@@ -1,11 +1,14 @@
 package in.itzmeanjan.filterit.segmentation;
 
 class Position {
-    private int x, y;
+    private final int x, y, intensity;
+    private int state;
 
-    Position(int x, int y) {
+    Position(int x, int y, int intensity) {
         this.x = x;
         this.y = y;
+        this.intensity = intensity;
+        this.state = 0;
     }
 
     public int getX() {
@@ -16,13 +19,25 @@ class Position {
         return y;
     }
 
-    public Position[][] getNeighbours() {
-        Position[][] neighbours = new Position[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                neighbours[i][j] = new Position(this.x + i - 1, this.y + j - 1);
-            }
-        }
-        return neighbours;
+    public int getIntensity() {
+        return intensity;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                ", intensity=" + intensity +
+                ", state=" + state +
+                '}';
     }
 }
