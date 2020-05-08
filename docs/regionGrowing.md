@@ -34,7 +34,7 @@ public class Main{
 	public static void main(String [] args){
 		System.out.println(
             ImportExportImage.exportImage(
-                new RegionGrowing().segment("mask.png", 640, 452, 5), 
+                new RegionGrowing().segment("mask.png", 640, 452, 5),
                 "segmented.png"));
 	}
 
@@ -50,6 +50,8 @@ public class Main{
 Sample | Segmented
 --- | ---
 ![mask](../examples/mask.png) | ![segmentedUsingRegionGrowing](../examples/segmentedUsingRegionGrowing.png)
+![abstract](../examples/abstract_4.jpg) | ![segmentedUsingRegionGrowing_2](../examples/segmentedUsingRegionGrowing_2.png)
+![abstract](../examples/abstract_4.jpg) | ![segmentedUsingRegionGrowing_3](../examples/segmentedUsingRegionGrowing_3.png)
 
 
 Thanking you :blush:
