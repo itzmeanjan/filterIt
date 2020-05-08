@@ -65,7 +65,10 @@ public class RegionGrowing {
         buffer.add(image.getPosition(x, y)); // seed pixel is first pixel which is set active
         while (!buffer.isEmpty()) {
             Position position = buffer.remove(0);
-            buffer.addAll(image.getUnexploredN8(position));
+            ArrayList<Position> tmp = image.getUnexploredN8(position);
+            // considering only those neighbours from N8, which are connected in terms of intensity value too
+            tmp.removeIf((pos) -> !pos.isIntensityWithInRange(targetIntensity, relaxation));
+            buffer.addAll(tmp);
             buffer.forEach(pos -> {
                 pos.setState(1);
             });
