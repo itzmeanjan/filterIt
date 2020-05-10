@@ -92,6 +92,11 @@ Following list denotes algorithms implemented in `filterIt`.
 - [x] [Automatic Thresholding](./docs/automaticThresholding.md)
 - [x] [Region Growing](./docs/regionGrowing.md)
 
+### Morphological Ops
+
+- [x] [Dilation](./docs/dilation.md)
+- [ ] Erosion
+
 ## API documentation
 
 Check [here](https://itzmeanjan.github.io/filterIt/javadoc/)
