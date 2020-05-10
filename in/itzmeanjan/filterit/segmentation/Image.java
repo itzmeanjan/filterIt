@@ -59,7 +59,9 @@ class Image {
         Image image = new Image(img.getWidth(), img.getHeight());
         for (int i = 0; i < img.getHeight(); i++) {
             for (int j = 0; j < img.getWidth(); j++) {
-                image.setPosition(j, i, new Position(j, i, new Color(img.getRGB(j, i)).getRed()));
+                Color color = new Color(img.getRGB(j, i));
+                image.setPosition(j, i,
+                        new Position(j, i, color.getRed(), color.getGreen(), color.getBlue()));
             }
         }
         return image;
@@ -100,25 +102,30 @@ class Image {
     }
 
     /**
-     * Obtains pixel locations present in N8
-     * ( order 1 neighbourhood ) of specified pixel location
+     * Can obtain all valid pixel locations around specified pixel P,
+     * for specific order of neighbourhood
      *
-     * @param position Pixel location
-     * @return Set of pixels which are in N8 of pixel
+     * @param position Location of pixel around which neighbouring pixels to be extracted
+     * @param order    Order of neighbourhood to be considered
+     * @return List of all pixel locations around it, present in order-X neighbourhood ( except itself )
      */
-    private ArrayList<Position> getN8(Position position) {
-        ArrayList<Position> n8 = new ArrayList<Position>();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (i == 1 && j == 1) {
+    public ArrayList<Position> getNeighbourhoodOfOrderX(Position position, int order) {
+        ArrayList<Position> neighbourhood = new ArrayList<Position>();
+        int width = 2 * order + 1;
+        int height = width;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (i == order && j == order) {
                     continue; // skipping this pixel itself
                 }
+
                 if (this.isPositionValid(position.getX() + j - 1, position.getY() + i - 1)) {
-                    n8.add(this.getPosition(position.getX() + j - 1, position.getY() + i - 1));
+                    neighbourhood.add(this.getPosition(position.getX() + j - 1, position.getY() + i - 1));
                 }
             }
         }
-        return n8;
+        return neighbourhood;
     }
 
     /**
@@ -129,7 +136,7 @@ class Image {
      * @return Set of pixels in order 1 neighbourhood of `position`, which are in *inactive* state
      */
     public ArrayList<Position> getUnexploredN8(Position position) {
-        ArrayList<Position> n8 = this.getN8(position);
+        ArrayList<Position> n8 = this.getNeighbourhoodOfOrderX(position, 1);
         n8.removeIf((pos) ->
                 pos.getState() != 0);
         return n8;

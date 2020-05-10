@@ -56,7 +56,7 @@ public class RegionGrowing {
         }
         Image image = Image.fromBufferedImage(new GrayScale().grayscale(img));
 
-        int targetIntensity = image.getPosition(x, y).getIntensity();
+        int targetIntensity = image.getPosition(x, y).getIntensityR();
         BufferedImage sink = new BufferedImage(width, height, img.getType());
         sink = ImportExportImage.setCanvas(sink, new Color(0, 0, 0)); // setting sink image background to black
 
@@ -67,12 +67,12 @@ public class RegionGrowing {
             Position position = buffer.remove(0);
             ArrayList<Position> tmp = image.getUnexploredN8(position);
             // considering only those neighbours from N8, which are connected in terms of intensity value too
-            tmp.removeIf((pos) -> !pos.isIntensityWithInRange(targetIntensity, relaxation));
+            tmp.removeIf((pos) -> !pos.isIntensityRWithInRange(targetIntensity, relaxation));
             buffer.addAll(tmp);
             buffer.forEach(pos -> {
                 pos.setState(1);
             });
-            if (position.isIntensityWithInRange(targetIntensity, relaxation)) {
+            if (position.isIntensityRWithInRange(targetIntensity, relaxation)) {
                 position.setState(2);
             }
         }
@@ -83,7 +83,10 @@ public class RegionGrowing {
                     sink.setRGB(
                             pos.getX(),
                             pos.getY(),
-                            new Color(pos.getIntensity(), pos.getIntensity(), pos.getIntensity()).getRGB()
+                            new Color(
+                                    pos.getIntensityR(),
+                                    pos.getIntensityG(),
+                                    pos.getIntensityB()).getRGB()
                     );
                 }
             }
