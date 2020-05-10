@@ -4,7 +4,7 @@ package in.itzmeanjan.filterit.segmentation;
  * Holds location, intensity & state information of a pixel in image
  */
 class Position {
-    private final int x, y, intensity;
+    private final int x, y, intensityR, intensityG, intensityB;
     private int state;
 
     /**
@@ -16,14 +16,18 @@ class Position {
      * <p>
      * And after all neighbours explored for this location, its state to be set as dead ( 2 )
      *
-     * @param x         X-coordinate of Pixel location
-     * @param y         Y-coordinate of Pixel location
-     * @param intensity Color intensity at I[y, x]
+     * @param x          X-coordinate of Pixel location
+     * @param y          Y-coordinate of Pixel location
+     * @param intensityR Red color component intensity at I[y, x]
+     * @param intensityG Green color component intensity at I[y, x]
+     * @param intensityB Blue color component intensity at I[y, x]
      */
-    Position(int x, int y, int intensity) {
+    Position(int x, int y, int intensityR, int intensityG, int intensityB) {
         this.x = x;
         this.y = y;
-        this.intensity = intensity;
+        this.intensityR = intensityR;
+        this.intensityG = intensityG;
+        this.intensityB = intensityB;
         this.state = 0;
     }
 
@@ -42,10 +46,24 @@ class Position {
     }
 
     /**
-     * @return Intensity at this location
+     * @return Red color intensity at this location
      */
-    public int getIntensity() {
-        return intensity;
+    public int getIntensityR() {
+        return intensityR;
+    }
+
+    /**
+     * @return Green color intensity at this location
+     */
+    public int getIntensityG() {
+        return intensityG;
+    }
+
+    /**
+     * @return Blue color intensity at this location
+     */
+    public int getIntensityB() {
+        return intensityB;
     }
 
     /**
@@ -65,7 +83,7 @@ class Position {
     }
 
     /**
-     * Checks whether this pixel's intensity satisfies
+     * Checks whether this pixel's red component intensity satisfies
      * <p>
      * targetIntensity - relaxation <= intensity <= targetIntensity + relaxation
      * <p>
@@ -73,10 +91,40 @@ class Position {
      *
      * @param targetIntensity target intensity, with which this pixel's intensity to be compared
      * @param relaxation      targetIntensity - relaxation <= intensity <= targetIntensity + relaxation, needs to be satisfied
-     * @return
+     * @return Result of comparison as true / false
      */
-    public boolean isIntensityWithInRange(int targetIntensity, int relaxation) {
-        return this.intensity >= targetIntensity - relaxation && this.intensity <= targetIntensity + relaxation;
+    public boolean isIntensityRWithInRange(int targetIntensity, int relaxation) {
+        return this.intensityR >= targetIntensity - relaxation && this.intensityR <= targetIntensity + relaxation;
+    }
+
+    /**
+     * Checks whether this pixel's green component intensity satisfies
+     * <p>
+     * targetIntensity - relaxation <= intensity <= targetIntensity + relaxation
+     * <p>
+     * or not
+     *
+     * @param targetIntensity target intensity, with which this pixel's intensity to be compared
+     * @param relaxation      targetIntensity - relaxation <= intensity <= targetIntensity + relaxation, needs to be satisfied
+     * @return Result of comparison as true / false
+     */
+    public boolean isIntensityGWithInRange(int targetIntensity, int relaxation) {
+        return this.intensityG >= targetIntensity - relaxation && this.intensityG <= targetIntensity + relaxation;
+    }
+
+    /**
+     * Checks whether this pixel's blue component intensity satisfies
+     * <p>
+     * targetIntensity - relaxation <= intensity <= targetIntensity + relaxation
+     * <p>
+     * or not
+     *
+     * @param targetIntensity target intensity, with which this pixel's intensity to be compared
+     * @param relaxation      targetIntensity - relaxation <= intensity <= targetIntensity + relaxation, needs to be satisfied
+     * @return Result of comparison as true / false
+     */
+    public boolean isIntensityBWithInRange(int targetIntensity, int relaxation) {
+        return this.intensityB >= targetIntensity - relaxation && this.intensityB <= targetIntensity + relaxation;
     }
 
     @Override
@@ -84,7 +132,9 @@ class Position {
         return "Position{" +
                 "x=" + x +
                 ", y=" + y +
-                ", intensity=" + intensity +
+                ", intensityR=" + intensityR +
+                ", intensityG=" + intensityG +
+                ", intensityB=" + intensityB +
                 ", state=" + state +
                 '}';
     }

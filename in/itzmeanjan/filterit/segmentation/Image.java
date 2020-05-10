@@ -59,7 +59,9 @@ class Image {
         Image image = new Image(img.getWidth(), img.getHeight());
         for (int i = 0; i < img.getHeight(); i++) {
             for (int j = 0; j < img.getWidth(); j++) {
-                image.setPosition(j, i, new Position(j, i, new Color(img.getRGB(j, i)).getRed()));
+                Color color = new Color(img.getRGB(j, i));
+                image.setPosition(j, i,
+                        new Position(j, i, color.getRed(), color.getGreen(), color.getBlue()));
             }
         }
         return image;
