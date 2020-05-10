@@ -7,11 +7,17 @@ import java.awt.image.BufferedImage;
 
 public class Dilation {
 
-    public BufferedImage dilate(BufferedImage img) {
-        return new ModeFilter().filter(img, 1);
+    public BufferedImage dilate(BufferedImage img, int itr) {
+        if (img == null || itr < 1) {
+            return null;
+        }
+        for (int i = 0; i < itr; i++) {
+            img = new ModeFilter().filter(img, 1);
+        }
+        return img;
     }
 
-    public BufferedImage dilate(String img) {
-        return this.dilate(ImportExportImage.importImage(img));
+    public BufferedImage dilate(String img, int itr) {
+        return this.dilate(ImportExportImage.importImage(img), itr);
     }
 }
