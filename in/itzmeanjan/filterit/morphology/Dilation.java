@@ -11,7 +11,7 @@ public class Dilation {
         return new ModeFilter().filter(img, 1);
     }
 
-    public BufferedImage dilate(String src) {
-        return this.dilate(ImportExportImage.importImage(src));
+    public BufferedImage dilate(String img) {
+        return this.dilate(ImportExportImage.importImage(img));
     }
 }
