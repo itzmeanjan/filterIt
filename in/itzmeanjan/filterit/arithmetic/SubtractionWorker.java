@@ -37,7 +37,7 @@ class SubtractionWorker implements Runnable {
   }
 
   /**
-   * Clipping values < 0 to 0 & > 255 to 255, and not touching anyother value already in range [0,
+   * Clipping values < 0 to 0 & > 255 to 255, and not touching any other value already in range [0,
    * 255], allows us to keep pixel intensities in range
    */
   private int clipIntensity(int intensity) {

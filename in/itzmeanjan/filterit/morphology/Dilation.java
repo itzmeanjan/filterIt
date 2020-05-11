@@ -11,10 +11,12 @@ public class Dilation {
         if (img == null || itr < 1) {
             return null;
         }
+        BufferedImage sink = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        sink.setData(img.getData());
         for (int i = 0; i < itr; i++) {
-            img = new ModeFilter().filter(img, 1);
+            sink = new ModeFilter().filter(sink, 1);
         }
-        return img;
+        return sink;
     }
 
     public BufferedImage dilate(String img, int itr) {
