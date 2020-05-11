@@ -39,6 +39,7 @@ Following list denotes algorithms implemented in `filterIt`.
 - [x] [Sobel Filter](./docs/sobelFilter.md)
 - [x] [Prewitt Filter](./docs/prewittFilter.md)
 - [ ] Laplacian Filter
+- [x] [using Dilation](./docs/edgeDetectionUsingDilation.md)
 
 ### Gray Scaling
 
