@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * <p>
  * 2 - Pixel is in dead state
  */
-class Image {
+public class Image {
     private final int width, height;
     private Position[][] positions;
 
@@ -28,7 +28,7 @@ class Image {
      * @param height    Height of image
      * @param positions Pixel locations of image ( in form of matrix ), in number width * height
      */
-    Image(int width, int height, Position[][] positions) {
+    public Image(int width, int height, Position[][] positions) {
         this.width = width;
         this.height = height;
         this.positions = positions;
@@ -41,7 +41,7 @@ class Image {
      * @param width  Width of image
      * @param height Height of image
      */
-    Image(int width, int height) {
+    public Image(int width, int height) {
         this.width = width;
         this.height = height;
         this.positions = new Position[height][width];

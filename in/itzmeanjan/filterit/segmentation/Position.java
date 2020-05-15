@@ -3,7 +3,7 @@ package in.itzmeanjan.filterit.segmentation;
 /**
  * Holds location, intensity & state information of a pixel in image
  */
-class Position {
+public class Position {
     private final int x, y, intensityR, intensityG, intensityB;
     private int state;
 
@@ -22,7 +22,7 @@ class Position {
      * @param intensityG Green color component intensity at I[y, x]
      * @param intensityB Blue color component intensity at I[y, x]
      */
-    Position(int x, int y, int intensityR, int intensityG, int intensityB) {
+    public Position(int x, int y, int intensityR, int intensityG, int intensityB) {
         this.x = x;
         this.y = y;
         this.intensityR = intensityR;
