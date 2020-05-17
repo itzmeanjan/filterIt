@@ -29,8 +29,9 @@ public class Dilation {
         }
         BufferedImage sink = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
         sink.setData(img.getData());
+        ModeFilter modeFilter = new ModeFilter();
         for (int i = 0; i < itr; i++) {
-            sink = new ModeFilter().filter(sink, 1);
+            sink = modeFilter.filter(sink, 1);
         }
         return sink;
     }
