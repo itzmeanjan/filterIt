@@ -40,6 +40,7 @@ Following list denotes algorithms implemented in `filterIt`.
 - [x] [Prewitt Filter](./docs/prewittFilter.md)
 - [ ] Laplacian Filter
 - [x] [using Dilation](./docs/edgeDetectionUsingDilation.md)
+- [x] [using Erosion](./docs/edgeDetectionUsingErosion.md)
 
 ### Gray Scaling
 
