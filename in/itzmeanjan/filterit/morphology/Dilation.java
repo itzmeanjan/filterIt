@@ -19,11 +19,12 @@ public class Dilation {
      * Dilation can be performed by simply applying mode filter
      * ( picks high intensity pixel from neighbourhood ) iteratively for number of specified times.
      *
-     * @param img Source image, to be dilated
-     * @param itr Number of times dilation to be performed
+     * @param img   Source image, to be dilated
+     * @param order Size of structuring element
+     * @param itr   Number of times dilation to be performed
      * @return Dilated image
      */
-    public BufferedImage dilate(BufferedImage img, int itr) {
+    public BufferedImage dilate(BufferedImage img, int order, int itr) {
         if (img == null || itr < 1) {
             return null;
         }
@@ -31,7 +32,7 @@ public class Dilation {
         sink.setData(img.getData());
         ModeFilter modeFilter = new ModeFilter();
         for (int i = 0; i < itr; i++) {
-            sink = modeFilter.filter(sink, 1);
+            sink = modeFilter.filter(sink, order);
         }
         return sink;
     }
@@ -39,11 +40,12 @@ public class Dilation {
     /**
      * Applies dilation on image given as filepath
      *
-     * @param img Source image, to be dilated
-     * @param itr Number of times dilation to be performed
+     * @param img   Source image, to be dilated
+     * @param order Size of structuring element
+     * @param itr   Number of times dilation to be performed
      * @return Dilated image
      */
-    public BufferedImage dilate(String img, int itr) {
-        return this.dilate(ImportExportImage.importImage(img), itr);
+    public BufferedImage dilate(String img, int order, int itr) {
+        return this.dilate(ImportExportImage.importImage(img), order, itr);
     }
 }

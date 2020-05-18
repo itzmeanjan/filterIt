@@ -17,11 +17,12 @@ public class Erosion {
     /**
      * Erodes given image
      *
-     * @param img Image to be eroded
-     * @param itr Times erosion to be performed iteratively
+     * @param img   Image to be eroded
+     * @param order Size of square shaped structuring element
+     * @param itr   Times erosion to be performed iteratively
      * @return Eroded image
      */
-    public BufferedImage erode(BufferedImage img, int itr) {
+    public BufferedImage erode(BufferedImage img, int order, int itr) {
         if (img == null || itr < 1) {
             return null;
         }
@@ -29,7 +30,7 @@ public class Erosion {
         sink.setData(img.getData());
         MinFilter minFilter = new MinFilter();
         for (int i = 0; i < itr; i++) {
-            sink = minFilter.filter(sink, 1);
+            sink = minFilter.filter(sink, order);
         }
         return sink;
     }
@@ -37,11 +38,12 @@ public class Erosion {
     /**
      * Erodes given image
      *
-     * @param img Image to be eroded
-     * @param itr Times erosion to be performed iteratively
+     * @param img   Image to be eroded
+     * @param order Size of square shaped structuring element
+     * @param itr   Times erosion to be performed iteratively
      * @return Eroded image
      */
-    public BufferedImage erode(String img, int itr) {
-        return this.erode(ImportExportImage.importImage(img), itr);
+    public BufferedImage erode(String img, int order, int itr) {
+        return this.erode(ImportExportImage.importImage(img), order, itr);
     }
 }

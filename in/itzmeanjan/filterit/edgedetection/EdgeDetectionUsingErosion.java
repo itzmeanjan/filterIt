@@ -24,24 +24,26 @@ public class EdgeDetectionUsingErosion {
     /**
      * Detects edges of image
      *
-     * @param img Image on which edges to be detected
+     * @param img   Image on which edges to be detected
+     * @param order Size of structuring element to be used for Erosion
      * @return Edge detected image
      */
-    public BufferedImage detect(BufferedImage img) {
+    public BufferedImage detect(BufferedImage img, int order) {
         if (img == null) {
             return null;
         }
         BufferedImage gray = new GrayScale().grayscale(img);
-        return new Subtraction().operate(gray, new Erosion().erode(gray, 1), true);
+        return new Subtraction().operate(gray, new Erosion().erode(gray, order, 1), true);
     }
 
     /**
      * Detects edges of image
      *
-     * @param img Image on which edges to be detected
+     * @param img   Image on which edges to be detected
+     * @param order Size of structuring element to be used for Erosion
      * @return Edge detected image
      */
-    public BufferedImage detect(String img) {
-        return this.detect(ImportExportImage.importImage(img));
+    public BufferedImage detect(String img, int order) {
+        return this.detect(ImportExportImage.importImage(img), order);
     }
 }
