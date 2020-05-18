@@ -23,25 +23,27 @@ public class EdgeDetectionUsingDilation {
      * First applies dilation and then subtracts source image from dilated image,
      * resulting into edge highlighted image
      *
-     * @param img Image to be edge detected
+     * @param img   Image to be edge detected
+     * @param order Size of structuring element to be used in Dilation
      * @return Edge highlighted image
      */
-    public BufferedImage detect(BufferedImage img) {
+    public BufferedImage detect(BufferedImage img, int order) {
         if (img == null) {
             return null;
         }
         BufferedImage gray = new GrayScale().grayscale(img);
-        return new Subtraction().operate(new Dilation().dilate(gray, 1), gray, true);
+        return new Subtraction().operate(new Dilation().dilate(gray, order, 1), gray, true);
     }
 
     /**
      * First applies dilation and then subtracts source image from dilated image,
      * resulting into edge highlighted image
      *
-     * @param img Image to be edge detected
+     * @param img   Image to be edge detected
+     * @param order Size of structuring element to be used in Dilation
      * @return Edge detected image
      */
-    public BufferedImage detect(String img) {
-        return this.detect(ImportExportImage.importImage(img));
+    public BufferedImage detect(String img, int order) {
+        return this.detect(ImportExportImage.importImage(img), order);
     }
 }
