@@ -99,6 +99,11 @@ Following list denotes algorithms implemented in `filterIt`.
 - [x] [Dilation](./docs/dilation.md)
 - [ ] Erosion
 
+### Image Smoothing
+
+- [x] [Opening](./docs/opening.md)
+- [x] [Closing](./docs/closing.md)
+
 ## API documentation
 
 Check [here](https://itzmeanjan.github.io/filterIt/javadoc/)
