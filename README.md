@@ -102,7 +102,7 @@ Following list denotes algorithms implemented in `filterIt`.
 ### Image Smoothing
 
 - [x] [Opening](./docs/opening.md)
-- [ ] Closing
+- [x] [Closing](./docs/closing.md)
 
 ## API documentation
 
