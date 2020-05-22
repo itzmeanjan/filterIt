@@ -104,6 +104,9 @@ public class Image {
     /**
      * Can obtain all valid pixel locations around specified pixel P,
      * for specific order of neighbourhood
+     * <p>
+     * Doesn't include itself in neighbourhood, for inclusive version,
+     * check below implementation
      *
      * @param position Location of pixel around which neighbouring pixels to be extracted
      * @param order    Order of neighbourhood to be considered
@@ -123,6 +126,34 @@ public class Image {
                 if (this.isPositionValid(position.getX() + j - 1, position.getY() + i - 1)) {
                     neighbourhood.add(this.getPosition(position.getX() + j - 1, position.getY() + i - 1));
                 }
+            }
+        }
+        return neighbourhood;
+    }
+
+    /**
+     * Can obtain all valid pixel locations around specified pixel P,
+     * for specific order of neighbourhood
+     * <p>
+     * Includes itself in neighbourhood, for exclusive version,
+     * check above implementation
+     *
+     * @param position Location of pixel around which neighbouring pixels to be extracted
+     * @param order    Order of neighbourhood to be considered
+     * @return List of all pixel locations around it, present in order-X neighbourhood ( including itself )
+     */
+    public ArrayList<Position> getNeighbourhoodOfOrderXInclusive(Position position, int order) {
+        ArrayList<Position> neighbourhood = new ArrayList<Position>();
+        int width = 2 * order + 1;
+        int height = width;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+                if (this.isPositionValid(position.getX() + j - 1, position.getY() + i - 1)) {
+                    neighbourhood.add(this.getPosition(position.getX() + j - 1, position.getY() + i - 1));
+                }
+
             }
         }
         return neighbourhood;
