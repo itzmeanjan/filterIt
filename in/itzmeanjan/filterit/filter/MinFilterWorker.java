@@ -83,13 +83,13 @@ class MinFilterWorker implements Runnable {
     }
 
     /**
-     * Obtains neighbourhood of order X, around given pixel
+     * Obtains neighbourhood of order X, around given pixel ( including self )
      *
      * @param position Pixel information holder
      * @return Set of pixels around given pixel ( neighbourhood of order X )
      */
     private ArrayList<Position> getNeighbourHood(Position position) {
-        return this.src.getNeighbourhoodOfOrderX(position, this.order);
+        return this.src.getNeighbourhoodOfOrderXInclusive(position, this.order);
     }
 
     /**
