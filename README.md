@@ -6,8 +6,6 @@ Banner_1 | Banner_2
 --- | ---
 ![banner](examples/banner.jpg) | ![banner_2](examples/banner_2.jpg)
 
-Currently, working on **Image Segmentation Ops**.
-
 _Help me in improving it :)_
 
 ## usage
@@ -97,7 +95,7 @@ Following list denotes algorithms implemented in `filterIt`.
 ### Morphological Ops
 
 - [x] [Dilation](./docs/dilation.md)
-- [ ] Erosion
+- [x] [Erosion](./docs/erosion.md)
 
 ### Image Smoothing
 
@@ -115,7 +113,7 @@ First fork this repo & then clone it into your machine.
 Now you can start working on it by creating a new branch. 
 Finally, submit a PR :wink:
 
-What I'm currently interested in is, implementing **image segmentation** ops. 
+What I'm currently interested in is, **improving concurrency in filters**. 
 You might consider helping me there.
 
 _Thanking you ..._
