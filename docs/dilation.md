@@ -8,11 +8,14 @@ and if at least one pixel of image has intensity value 1 _( for binary images )_
 currently kernel centered at, will get a value 1 _( foreground pixel intensity value )_, 
 resulting into increased size of foreground region of image.
 
-Here we consider 1 to be foreground color & 0 to be background color.
+**Here we consider 1 to be foreground color & 0 to be background color.**
 
 But we're interested in applying dilation on color & grayscale images too. All we need to do is to consider
-max pixel intensity from order 1 neighborhood around current center pixel 
+max pixel intensity from order-**X** neighborhood around current center pixel 
 & put that as new intensity at current center pixel.
+
+**Dilation is not exactly Mode Filter, because shape of kernel not confined to square matrices. 
+Though square shaped masks only supported as of this writing.**
 
 For color image, we need to do this same thing for three different color components. 
 Only RGB color model supported at time of writing.
@@ -33,7 +36,7 @@ public class Main{
 	public static void main(String [] args){
 		System.out.println(
             ImportExportImage.exportImage(
-                new Dilation().dilate("dream.jpg"), 
+                new Dilation().dilate("dream.jpg", 1, 1), 
                 "dilated.jpg"));
 	}
 
