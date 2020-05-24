@@ -20,6 +20,17 @@ import java.util.concurrent.TimeUnit;
 public class MeanFilter implements Filter {
 
     /**
+     * Checks whether requested order of filter can be applied or not,
+     * order needs to be > 0
+     *
+     * @param order Order of filter to be applied
+     * @return Whether order value is valid or not
+     */
+    private boolean isOrderValid(int order) {
+        return order > 0;
+    }
+
+    /**
      * Applies mean filter on given buffered image of given order
      *
      * <p>order > 0 :: considers sub image of size ( 2*order + 1 ) x ( 2*order + 1 ), around P(x, y)
@@ -28,7 +39,7 @@ public class MeanFilter implements Filter {
      */
     @Override
     public BufferedImage filter(BufferedImage img, int order) {
-        if (img == null) {
+        if (img == null || !this.isOrderValid(order)) {
             return null;
         }
         ExecutorService eService =
