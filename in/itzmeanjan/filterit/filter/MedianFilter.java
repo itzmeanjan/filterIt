@@ -1,7 +1,6 @@
 package in.itzmeanjan.filterit.filter;
 
 import in.itzmeanjan.filterit.ImportExportImage;
-import in.itzmeanjan.filterit.Pixel;
 import in.itzmeanjan.filterit.segmentation.Image;
 
 import java.awt.image.BufferedImage;
@@ -18,6 +17,19 @@ import java.util.concurrent.TimeUnit;
  * This model uses a row based concurrency model i.e. each row of image matrix to be processed on thread pool
  */
 public class MedianFilter implements Filter {
+
+    /**
+     * Checks whether requested order of filter can be applied or not,
+     * order needs to be > 0
+     *
+     * @param order Order of filter to be applied
+     * @return Whether order value is valid or not
+     */
+    @Override
+    public boolean isOrderValid(int order) {
+        return order > 0;
+    }
+
 
     /**
      * Concurrently applies median filter on each
