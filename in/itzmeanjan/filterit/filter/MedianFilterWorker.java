@@ -1,12 +1,10 @@
 package in.itzmeanjan.filterit.filter;
 
-import in.itzmeanjan.filterit.Pixel;
 import in.itzmeanjan.filterit.segmentation.Image;
 import in.itzmeanjan.filterit.segmentation.Position;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 /**
