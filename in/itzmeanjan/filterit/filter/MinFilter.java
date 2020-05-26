@@ -16,13 +16,25 @@ import java.util.concurrent.TimeUnit;
 public class MinFilter implements Filter {
 
     /**
+     * Checks whether requested order of filter can be applied or not,
+     * order needs to be > 0
+     *
+     * @param order Order of filter to be applied
+     * @return Whether order value is valid or not
+     */
+    @Override
+    public boolean isOrderValid(int order) {
+        return order > 0;
+    }
+
+    /**
      * Given a buffered image, computes min pixel intensity from neighbourhood of that pixel, and
      * replaces so in sink image. Each row of image matrix gets processed concurrently,
      * possibly on different thread of execution i.e. thread available at pool
      */
     @Override
     public BufferedImage filter(BufferedImage img, int order) {
-        if (img == null) {
+        if (img == null || !this.isOrderValid(order)) {
             return null;
         }
         ExecutorService eService =

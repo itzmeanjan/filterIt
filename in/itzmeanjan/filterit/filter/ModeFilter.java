@@ -15,12 +15,24 @@ import java.util.concurrent.TimeUnit;
 public class ModeFilter implements Filter {
 
     /**
+     * Checks whether requested order of filter can be applied or not,
+     * order needs to be > 0
+     *
+     * @param order Order of filter to be applied
+     * @return Whether order value is valid or not
+     */
+    @Override
+    public boolean isOrderValid(int order) {
+        return order > 0;
+    }
+
+    /**
      * Given an image & order value, it'll concurrently apply mode filter on each row of image
      * matrix ( using convolution mechanism ) & return modified image, while not affecting original image
      */
     @Override
     public BufferedImage filter(BufferedImage img, int order) {
-        if (img == null) {
+        if (img == null || !this.isOrderValid(order)) {
             return null;
         }
         ExecutorService eService =

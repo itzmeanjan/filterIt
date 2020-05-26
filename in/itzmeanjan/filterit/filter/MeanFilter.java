@@ -26,7 +26,8 @@ public class MeanFilter implements Filter {
      * @param order Order of filter to be applied
      * @return Whether order value is valid or not
      */
-    private boolean isOrderValid(int order) {
+    @Override
+    public boolean isOrderValid(int order) {
         return order > 0;
     }
 

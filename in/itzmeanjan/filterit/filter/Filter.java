@@ -7,5 +7,7 @@ public interface Filter {
 
   BufferedImage filter(String src, int order);
 
+  boolean isOrderValid(int order);
+
   String filterName();
 }
