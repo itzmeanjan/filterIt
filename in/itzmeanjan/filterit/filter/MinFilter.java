@@ -34,7 +34,7 @@ public class MinFilter implements Filter {
      */
     @Override
     public BufferedImage filter(BufferedImage img, int order) {
-        if (img == null) {
+        if (img == null || !this.isOrderValid(order)) {
             return null;
         }
         ExecutorService eService =
